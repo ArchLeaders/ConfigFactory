@@ -1,0 +1,73 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ConfigFactory.Avalonia.Controls">
+    <Design.PreviewWith>
+        <controls:ConfigItem Margin="15"
+                             Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit.&#x0a;Porro vel expedita, magnam repellendus temporibus&#x0a;nulla culpa explicabo cupiditate ratione laboriosam!"
+                             Header="Hello World"
+                             ValidationBrush="Green">
+            <TextBox Text="Lorem ipsum dolor sit, amet consectetur adipisicing elit." />
+        </controls:ConfigItem>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ConfigItem">
+        <Setter Property="Background" Value="{DynamicResource SystemChromeMediumColor}" />
+        <Setter Property="BoxShadow" Value="1 1 5 0 #00000000" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Border"
+                        Margin="{TemplateBinding Margin}"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BoxShadow="{TemplateBinding BoxShadow}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid Name="PART_ColumnLayout">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentColumn}" />
+                        </Grid.ColumnDefinitions>
+                        <Border Name="PART_ValidationBorder"
+                                Width="2"
+                                Margin="0,0,5,0"
+                                Background="{TemplateBinding ValidationBrush}"
+                                CornerRadius="1" />
+                        <Grid Name="PART_RowLayout"
+                              Grid.Column="1"
+                              RowDefinitions="Auto,*">
+                            <TextBlock Name="PART_Header"
+                                       FontSize="15"
+                                       FontWeight="Bold"
+                                       Text="{TemplateBinding Header}"
+                                       TextWrapping="WrapWithOverflow" />
+                            <TextBlock Name="PART_Description"
+                                       Grid.Row="1"
+                                       Text="{TemplateBinding Description}"
+                                       TextWrapping="Wrap" />
+                        </Grid>
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Grid.RowSpan="2"
+                                          Grid.Column="3"
+                                          Content="{TemplateBinding Content}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.2" />
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SystemChromeMediumLowColor}" />
+            <Setter Property="BoxShadow" Value="1 2 5 1 #25000000" />
+        </Style>
+    </Style>
+</Styles>
