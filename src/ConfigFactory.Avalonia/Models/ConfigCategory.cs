@@ -15,4 +15,17 @@ public partial class ConfigCategory : ObservableObject
     {
         _header = header;
     }
+
+    /// <summary>
+    /// Custom constructor used in <see cref="ConfigFactory.GetConfigGroup(ConfigPageModel, Core.Attributes.ConfigAttribute)"/> as a helper extension
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="header"></param>
+    /// <param name="isFirstCategory"></param>
+    internal ConfigCategory(ConfigPageModel parent, string header, out bool isFirstCategory)
+    {
+        _header = header;
+        parent.Categories.Add(this);
+        isFirstCategory = true;
+    }
 }
