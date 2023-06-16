@@ -18,21 +18,24 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-        <controls:ConfigItem Margin="5"
-                             Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro vel expedita, magnam repellendus temporibus nulla culpa explicabo cupiditate ratione laboriosam!"
-                             Header="Hello World">
-            <TextBox Text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro vel expedita, magnam repellendus temporibus nulla culpa explicabo cupiditate ratione laboriosam!" />
+    <!--<StackPanel>
+        <controls:ConfigItem Margin="6,6,6,0"
+                             Description="Shows a new config factory page"
+                             Header="Config Factory"
+                             ValidationBrush="#00CC1C">
+            <Button HorizontalAlignment="Right" Content="Open Config Page" />
         </controls:ConfigItem>
 
-        <controls:ConfigItem Margin="5"
-                             ContentColumn="100"
-                             Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro vel expedita, magnam repellendus temporibus nulla culpa explicabo cupiditate ratione laboriosam!"
-                             Header="Hello World">
+        <controls:ConfigItem Margin="6,0,6,6"
+                             Description="Simple, disabled configuration item"
+                             Header="Disabled">
             <ToggleSwitch HorizontalAlignment="Right"
                           VerticalAlignment="Top"
+                          IsChecked="{Binding $parent[controls:ConfigItem].IsEnabled}"
                           OffContent=""
                           OnContent="" />
         </controls:ConfigItem>
-    </StackPanel>
+    </StackPanel>-->
+
+    <controls:ConfigPage Name="ConfigPage" />
 </Window>
