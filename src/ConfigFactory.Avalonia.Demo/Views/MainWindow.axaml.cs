@@ -8,6 +8,5 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        ConfigPageModel page = (ConfigPageModel)ConfigPage.DataContext!;
     }
 }
