@@ -7,28 +7,33 @@ public class ConfigProperties : Dictionary<string, (PropertyInfo info, ConfigAtt
 {
     public static ConfigProperties Generate<T>()
     {
-        return (ConfigProperties)typeof(T)
+        return new(typeof(T)
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Select(x => (info: x, attribute: x.GetCustomAttribute<ConfigAttribute>()))
-            .Where(x => x.attribute != null)
-            .ToDictionary(x => x.info.Name, x => (x.info, x.attribute!));
+            .Where(x => x.attribute != null));
     }
 
     public static ConfigProperties Generate(Type type)
     {
-        return (ConfigProperties)type
+        return new(type
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Select(x => (info: x, attribute: x.GetCustomAttribute<ConfigAttribute>()))
-            .Where(x => x.attribute != null)
-            .ToDictionary(x => x.info.Name, x => (x.info, x.attribute!));
+            .Where(x => x.attribute != null));
     }
 
     public static ConfigProperties Generate(object? context)
     {
-        return context != null ? (ConfigProperties)context.GetType()
+        return context != null ? new(context.GetType()
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Select(x => (info: x, attribute: x.GetCustomAttribute<ConfigAttribute>()))
-            .Where(x => x.attribute != null)
-            .ToDictionary(x => x.info.Name, x => (x.info, x.attribute!)) : new();
+            .Where(x => x.attribute != null)) : new();
+    }
+
+    public ConfigProperties() { }
+    private ConfigProperties(IEnumerable<(PropertyInfo info, ConfigAttribute? attribute)> map)
+    {
+        foreach ((var info, var attribute) in map) {
+            Add(info.Name, (info, attribute!));
+        }
     }
 }
