@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ConfigFactory.Core.Models;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ConfigFactory.Core;
 
@@ -13,14 +14,17 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     /// The name of the <see cref="ConfigModule{T}"/>
     /// <para><i>Default: <see langword="nameof(T)"/></i></para>
     /// </summary>
+    [JsonIgnore]
     public virtual string Name { get; }
 
     /// <summary>
     /// The local path of the serialized config file
     /// <para><i>Default: %appdata%/<see langword="nameof(T)"/>/Config.json</i></para>
     /// </summary>
+    [JsonIgnore]
     public virtual string LocalPath { get; }
 
+    [JsonIgnore]
     public ConfigProperties Properties { get; }
 
     public ConfigModule()
