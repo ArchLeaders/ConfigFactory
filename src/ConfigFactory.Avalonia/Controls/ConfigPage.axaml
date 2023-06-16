@@ -1,8 +1,101 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="ConfigFactory.Avalonia.Controls.ConfigPage"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ConfigFactory.Avalonia.Controls.ConfigPage">
-  Welcome to Avalonia!
+             xmlns:models="using:ConfigFactory.Avalonia.Models"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="models:ConfigPageModel"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <models:ConfigPageModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{DynamicResource SystemChromeLowColor}" ColumnDefinitions="260,*">
+        <Grid Name="PART_FocusDelegate_1"
+              ColumnDefinitions="*,Auto"
+              RowDefinitions="*,Auto">
+            <ScrollViewer Margin="15">
+                <ItemsControl Width="200"
+                              Margin="10"
+                              HorizontalAlignment="Right"
+                              Items="{Binding Categories}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,15" RowDefinitions="Auto,Auto,*">
+                                <TextBlock Margin="7"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource SystemChromeHighColor}"
+                                           Text="{Binding Header}" />
+                                <Border Grid.Row="1"
+                                        Height="1"
+                                        Margin="0,6"
+                                        Background="{DynamicResource SystemChromeHighColor}" />
+                                <ItemsControl Grid.Row="2" Items="{Binding Groups}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ToggleButton Margin="0,0,0,3"
+                                                          HorizontalAlignment="Stretch"
+                                                          Background="Transparent"
+                                                          Command="{Binding SelectGroupRelayCommand}"
+                                                          CommandParameter="{Binding $parent[UserControl].DataContext}"
+                                                          Content="{Binding Header}"
+                                                          IsChecked="{Binding IsSelected}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Grid Name="PART_ButtonStack"
+                  Grid.Row="1"
+                  Margin="20"
+                  ColumnDefinitions="0.6*,*,*">
+                <Button Name="PART_SecondaryButton"
+                        Grid.Column="1"
+                        Margin="5,0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Content="{Binding SecondaryButtonContent}"
+                        IsEnabled="{Binding SecondaryButtonIsEnabled}" />
+                <Button Name="PART_PrimaryButton"
+                        Grid.Column="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding PrimaryRelayCommand}"
+                        Content="{Binding PrimaryButtonContent}"
+                        IsEnabled="{Binding PrimaryButtonIsEnabled}" />
+            </Grid>
+
+            <Border Grid.Column="1"
+                    Width="1"
+                    Margin="0,15"
+                    Background="{DynamicResource SystemChromeHighColor}" />
+        </Grid>
+
+        <Grid Name="PART_FocusDelegate_2" Grid.Column="1">
+            <ScrollViewer x:CompileBindings="True"
+                          x:DataType="models:ConfigGroup"
+                          DataContext="{Binding SelectedGroup}"
+                          VerticalScrollBarVisibility="Auto">
+                <ContentControl Width="{Binding $parent.Bounds.Width}"
+                                MaxWidth="1200"
+                                HorizontalAlignment="Left">
+                    <Grid Margin="20" RowDefinitions="Auto,*">
+                        <TextBlock Margin="5,5,5,10"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   Text="{Binding Header}" />
+                        <ItemsControl Grid.Row="1" Items="{Binding Items}" />
+                    </Grid>
+                </ContentControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
 </UserControl>
