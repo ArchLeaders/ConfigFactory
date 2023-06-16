@@ -6,6 +6,7 @@ namespace ConfigFactory.Core;
 
 public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T : ConfigModule<T>, new()
 {
+    IConfigModule IConfigModule.Shared => Shared;
     public static T Shared { get; } = Load();
 
     /// <summary>

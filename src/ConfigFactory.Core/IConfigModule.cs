@@ -7,6 +7,8 @@ namespace ConfigFactory.Core;
 /// </summary>
 public interface IConfigModule
 {
+    public IConfigModule Shared { get; }
+
     /// <summary>
     /// Cached runtime reflected properties used by the UI builder
     /// </summary>
