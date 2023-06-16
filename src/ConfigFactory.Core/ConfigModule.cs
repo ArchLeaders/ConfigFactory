@@ -1,19 +1,35 @@
-﻿using System.Text.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ConfigFactory.Core.Models;
+using System.Text.Json;
 
 namespace ConfigFactory.Core;
 
-public abstract class ConfigModule<T> : IConfigModule where T : ConfigModule<T>, new()
+public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T : ConfigModule<T>, new()
 {
     public static T Shared { get; } = Load();
-    public virtual string Name { get; } = nameof(T);
+
+    /// <summary>
+    /// The name of the <see cref="ConfigModule{T}"/>
+    /// <para><i>Default: <see langword="nameof(T)"/></i></para>
+    /// </summary>
+    public virtual string Name { get; }
+
+    /// <summary>
+    /// The local path of the serialized config file
+    /// <para><i>Default: %appdata%/<see langword="nameof(T)"/>/Config.json</i></para>
+    /// </summary>
     public virtual string LocalPath { get; }
+
+    public ConfigProperties Properties { get; }
 
     public ConfigModule()
     {
-        LocalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Name, "config.json");
+        Name = nameof(T);
+        LocalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Name, "Config.json");
+        Properties = ConfigProperties.Generate<T>();
     }
 
-    public static T Load() => (T)(new T() as IConfigModule).Load();
+    private static T Load() => (T)(new T() as IConfigModule).Load();
     IConfigModule IConfigModule.Load()
     {
         if (!File.Exists(LocalPath)) {
