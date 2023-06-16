@@ -73,7 +73,8 @@
                         IsEnabled="{Binding PrimaryButtonIsEnabled}" />
             </Grid>
 
-            <Border Grid.Column="1"
+            <Border Grid.RowSpan="2"
+                    Grid.Column="1"
                     Width="1"
                     Margin="0,15"
                     Background="{DynamicResource SystemChromeHighColor}" />
