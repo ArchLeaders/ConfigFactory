@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:ConfigFactory.Avalonia.Controls">
     <Design.PreviewWith>
-        <controls:ConfigItem Margin="15"
+        <controls:ConfigItem Margin="10"
                              Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit.&#x0a;Porro vel expedita, magnam repellendus temporibus&#x0a;nulla culpa explicabo cupiditate ratione laboriosam!"
                              Header="Hello World"
                              ValidationBrush="Green">
@@ -14,11 +14,12 @@
         <Setter Property="Background" Value="{DynamicResource SystemChromeMediumColor}" />
         <Setter Property="BoxShadow" Value="1 1 5 0 #00000000" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="InnerMargin" Value="5" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_Border"
-                        Margin="{TemplateBinding Margin}"
+                        Margin="{TemplateBinding InnerMargin}"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -39,14 +40,16 @@
                                 CornerRadius="1" />
                         <Grid Name="PART_RowLayout"
                               Grid.Column="1"
-                              RowDefinitions="Auto,*">
+                              RowDefinitions="Auto,5,*">
                             <TextBlock Name="PART_Header"
                                        FontSize="15"
-                                       FontWeight="Bold"
                                        Text="{TemplateBinding Header}"
                                        TextWrapping="WrapWithOverflow" />
                             <TextBlock Name="PART_Description"
-                                       Grid.Row="1"
+                                       Grid.Row="2"
+                                       FontSize="12"
+                                       FontWeight="Light"
+                                       Opacity="0.7"
                                        Text="{TemplateBinding Description}"
                                        TextWrapping="Wrap" />
                         </Grid>
@@ -68,6 +71,10 @@
         <Style Selector="^:pointerover">
             <Setter Property="Background" Value="{DynamicResource SystemChromeMediumLowColor}" />
             <Setter Property="BoxShadow" Value="1 2 5 1 #25000000" />
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.8" />
         </Style>
     </Style>
 </Styles>
