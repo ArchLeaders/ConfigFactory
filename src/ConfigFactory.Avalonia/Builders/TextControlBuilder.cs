@@ -2,7 +2,9 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Layout;
+using CommunityToolkit.Mvvm.Input;
 using ConfigFactory.Avalonia.Generics;
+using ConfigFactory.Avalonia.Helpers;
 using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
 using System.Reflection;
@@ -13,20 +15,35 @@ public class TextControlBuilder : ControlBuilder<TextControlBuilder>
 {
     public override object? Build(IConfigModule context, PropertyInfo propertyInfo)
     {
-        if (propertyInfo.GetCustomAttribute<BrowserConfigAttribute>() is BrowserConfigAttribute) {
-            return new StackPanel {
+        if (propertyInfo.GetCustomAttribute<BrowserConfigAttribute>() is BrowserConfigAttribute browserConfigAttribute) {
+            return new Grid {
                 DataContext = context,
-                Orientation = Orientation.Horizontal,
-                Spacing = 5,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Top,
                 Children = {
                     new TextBox {
+                        Margin = new(0, 0, 37, 0),
                         [!TextBox.TextProperty] = new Binding(propertyInfo.Name)
                     },
                     new Button {
-                        Width = 20,
-                        Height = 20,
-                        Content = "..."
+                        Content = "...",
+                        DataContext = new {
+                            RelayCommand = new RelayCommand(async () => {
+                                BrowserDialog dialog = new(
+                                    browserConfigAttribute.BrowserMode,
+                                    browserConfigAttribute.Title,
+                                    browserConfigAttribute.Filter,
+                                    browserConfigAttribute.SuggestedFileName,
+                                    browserConfigAttribute.InstanceBrowserKey);
+                                if (await dialog.ShowDialog() is string value) {
+                                    propertyInfo.SetValue(context, value);
+                                }
+                            })
+                        },
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                        Width = 32,
+                        [!Button.CommandProperty] = new Binding("RelayCommand")
                     }
                 }
             };
