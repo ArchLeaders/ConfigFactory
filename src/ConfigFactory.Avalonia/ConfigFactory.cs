@@ -53,6 +53,7 @@ public static class ConfigFactory
     private static void RegisterDefaults()
     {
         TextControlBuilder.Shared.Register();
+        EnumControlBuilder.Shared.Register();
     }
 
     private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, ConfigAttribute attribute)
