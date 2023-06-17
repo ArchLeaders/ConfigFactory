@@ -16,6 +16,18 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
     private string _someField = string.Empty;
 
     [ObservableProperty]
+    [property: BrowserConfig(
+        BrowserMode = BrowserMode.OpenFile,
+        Filter = "Backups:*.bak",
+        InstanceBrowserKey = "some-browser-field-key")]
+    [property: Config(
+        Header = "Some Browser Field",
+        Description = "Extended (probably redundant) description of Some Field, a text-based configuration",
+        Category = "General",
+        Group = "Common")]
+    private string _someBrowserField = string.Empty;
+
+    [ObservableProperty]
     [property: DropdownConfig(
         RuntimeItemsSourceMethodName = "GetThings")]
     [property: Config(
