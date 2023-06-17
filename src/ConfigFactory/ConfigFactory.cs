@@ -10,7 +10,14 @@ public static class ConfigFactory
 {
     private static readonly List<IControlBuilder> _builders = new();
 
+    /// <summary>
+    /// Constructs a new <see cref="ConfigPageModel"/> object with the configuration items found in the <see cref="IConfigModule"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static ConfigPageModel Build<T>() where T : ConfigModule<T>, new() => Build(ConfigModule<T>.Shared);
+
+    /// <inheritdoc cref="Build{T}"/>
     public static ConfigPageModel Build<T>(T module) where T : IConfigModule
     {
         ConfigPageModel configPageModel = new();
@@ -18,7 +25,15 @@ public static class ConfigFactory
         return configPageModel;
     }
 
+    /// <summary>
+    /// Appends the configuration items found in the <see cref="IConfigModule"/> to the <paramref name="configPageModel"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="configPageModel"></param>
+    /// <returns></returns>
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel) where T : ConfigModule<T>, new() => Append(configPageModel, ConfigModule<T>.Shared);
+
+    /// <inheritdoc cref="Append{T}(ConfigPageModel)"/>
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel, T module) where T : IConfigModule
     {
         configPageModel.PrimaryButtonEvent += () => {
@@ -41,13 +56,24 @@ public static class ConfigFactory
         return configPageModel;
     }
 
+    /// <summary>
+    /// Registers a custom <see cref="IControlBuilder"/> to handle custom property types
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public static void RegisterBuilder<T>() where T : ControlBuilder<T>, new() => Register(ControlBuilder<T>.Shared);
+
+    /// <inheritdoc cref="RegisterBuilder{T}"/>
     public static void Register(this IControlBuilder builder)
     {
         _builders.Add(builder);
     }
 
-
+    /// <summary>
+    /// Locates the <see cref="ConfigGroup"/> matching the <paramref name="attribute"/> properties
+    /// </summary>
+    /// <param name="configPageModel"></param>
+    /// <param name="attribute"></param>
+    /// <returns></returns>
     private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, ConfigAttribute attribute)
     {
         bool isFirstCategory = false;
