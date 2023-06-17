@@ -1,7 +1,5 @@
-﻿using Avalonia.Markup.Xaml.MarkupExtensions;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ConfigFactory.Avalonia.Controls;
 using System.Collections.ObjectModel;
 
 namespace ConfigFactory.Avalonia.Models;
@@ -26,23 +24,20 @@ public partial class ConfigPageModel : ObservableObject
     [ObservableProperty]
     private bool _secondaryButtonIsEnabled = true;
 
-    [ObservableProperty]
-    private Func<Task>? _primaryButtonAction;
-
-    [ObservableProperty]
-    private Func<Task>? _secondaryButtonAction;
+    public event Func<Task>? PrimaryButtonEvent;
+    public event Func<Task>? SecondaryButtonEvent;
 
     [RelayCommand]
     public Task PrimaryRelay()
     {
-        return PrimaryButtonAction?.Invoke()
+        return PrimaryButtonEvent?.Invoke()
             ?? Task.CompletedTask;
     }
 
     [RelayCommand]
     public Task SecondaryRelay()
     {
-        return SecondaryButtonAction?.Invoke()
+        return SecondaryButtonEvent?.Invoke()
             ?? Task.CompletedTask;
     }
 
