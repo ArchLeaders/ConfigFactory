@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConfigFactory.Core\ConfigFactory.Core.csproj" />
+    <ProjectReference Include="..\ConfigFactory\ConfigFactory.csproj" />
   </ItemGroup>
 
 </Project>

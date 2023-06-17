@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace ConfigFactory.Avalonia.Models;
+namespace ConfigFactory.Models;
 
 public partial class ConfigCategory : ObservableObject
 {

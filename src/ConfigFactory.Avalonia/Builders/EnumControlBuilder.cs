@@ -2,8 +2,8 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Layout;
-using ConfigFactory.Avalonia.Generics;
 using ConfigFactory.Core;
+using ConfigFactory.Generics;
 using System.Reflection;
 
 namespace ConfigFactory.Avalonia.Builders;

@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace ConfigFactory.Avalonia.Controls;
+namespace ConfigFactory.Avalonia;
 
 public class ConfigItem : ContentControl
 {

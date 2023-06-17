@@ -1,8 +1,15 @@
 using Avalonia.Controls;
+using ConfigFactory.Avalonia.Builders;
 
-namespace ConfigFactory.Avalonia.Controls;
+namespace ConfigFactory.Avalonia;
 public partial class ConfigPage : UserControl
 {
+    static ConfigPage()
+    {
+        TextControlBuilder.Shared.Register();
+        EnumControlBuilder.Shared.Register();
+    }
+
     public ConfigPage()
     {
         InitializeComponent();

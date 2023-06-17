@@ -1,16 +1,16 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:ConfigFactory.Avalonia.Controls">
+        xmlns:local="using:ConfigFactory.Avalonia">
     <Design.PreviewWith>
-        <controls:ConfigItem Margin="10"
-                             Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit.&#x0a;Porro vel expedita, magnam repellendus temporibus&#x0a;nulla culpa explicabo cupiditate ratione laboriosam!"
-                             Header="Hello World"
-                             ValidationBrush="Green">
+        <local:ConfigItem Margin="10"
+                          Description="Lorem ipsum dolor sit, amet consectetur adipisicing elit.&#x0a;Porro vel expedita, magnam repellendus temporibus&#x0a;nulla culpa explicabo cupiditate ratione laboriosam!"
+                          Header="Hello World"
+                          ValidationBrush="Green">
             <TextBox Text="Lorem ipsum dolor sit, amet consectetur adipisicing elit." />
-        </controls:ConfigItem>
+        </local:ConfigItem>
     </Design.PreviewWith>
 
-    <Style Selector="controls|ConfigItem">
+    <Style Selector="local|ConfigItem">
         <Setter Property="Background" Value="{DynamicResource SystemChromeMediumColor}" />
         <Setter Property="BoxShadow" Value="1 1 5 0 #00000000" />
         <Setter Property="CornerRadius" Value="5" />

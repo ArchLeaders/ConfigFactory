@@ -1,7 +1,7 @@
 ﻿using ConfigFactory.Core;
 using System.Reflection;
 
-namespace ConfigFactory.Avalonia.Generics;
+namespace ConfigFactory.Generics;
 
 public abstract class ControlBuilder<T> : IControlBuilder where T : ControlBuilder<T>, new()
 {

@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ConfigFactory.Avalonia.Controls;
 using System.Collections.ObjectModel;
 
-namespace ConfigFactory.Avalonia.Models;
+namespace ConfigFactory.Models;
 
 public partial class ConfigGroup : ObservableObject
 {

@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using ConfigFactory.Avalonia.Demo.Models;
-using ConfigFactory.Avalonia.Models;
+using ConfigFactory.Models;
 
 namespace ConfigFactory.Avalonia.Demo.Views;
 public partial class MainWindow : Window

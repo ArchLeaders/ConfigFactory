@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
-namespace ConfigFactory.Avalonia.Models;
+namespace ConfigFactory.Models;
 
 public partial class ConfigPageModel : ObservableObject
 {

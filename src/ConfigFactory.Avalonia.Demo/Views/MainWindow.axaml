@@ -1,7 +1,7 @@
 <Window x:Class="ConfigFactory.Avalonia.Demo.Views.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:ConfigFactory.Avalonia.Controls;assembly=ConfigFactory.Avalonia"
+        xmlns:controls="clr-namespace:ConfigFactory.Avalonia;assembly=ConfigFactory.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:ConfigFactory.Avalonia.Demo.ViewModels"

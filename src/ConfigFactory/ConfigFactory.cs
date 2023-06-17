@@ -1,17 +1,17 @@
-﻿using ConfigFactory.Avalonia.Builders;
-using ConfigFactory.Avalonia.Generics;
-using ConfigFactory.Avalonia.Models;
-using ConfigFactory.Core;
+﻿using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
+using ConfigFactory.Generics;
+using ConfigFactory.Models;
 using System.Reflection;
 
-namespace ConfigFactory.Avalonia;
+namespace ConfigFactory;
 
 public static class ConfigFactory
 {
     private static readonly List<IControlBuilder> _builders = new();
+    private static event Action? RegisterDefaults;
 
-    static ConfigFactory() => RegisterDefaults();
+    static ConfigFactory() => RegisterDefaults?.Invoke();
 
     public static ConfigPageModel Build<T>() where T : ConfigModule<T>, new() => Build(ConfigModule<T>.Shared);
     public static ConfigPageModel Build<T>(T module) where T : IConfigModule
@@ -33,10 +33,10 @@ public static class ConfigFactory
             object? value = info.GetValue(module, null);
             if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
                 ConfigGroup group = GetConfigGroup(configPageModel, attribute);
-                group.Items.Add(new() {
-                    Header = attribute.Header,
+                group.Items.Add(new ConfigItem {
+                    Content = builder.Build(module, info),
                     Description = attribute.Description,
-                    Content = builder.Build(module, info)
+                    Header = attribute.Header
                 });
             }
         }
@@ -50,11 +50,6 @@ public static class ConfigFactory
         _builders.Add(builder);
     }
 
-    private static void RegisterDefaults()
-    {
-        TextControlBuilder.Shared.Register();
-        EnumControlBuilder.Shared.Register();
-    }
 
     private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, ConfigAttribute attribute)
     {

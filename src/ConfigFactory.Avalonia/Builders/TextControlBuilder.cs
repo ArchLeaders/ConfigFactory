@@ -3,10 +3,10 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Layout;
 using CommunityToolkit.Mvvm.Input;
-using ConfigFactory.Avalonia.Generics;
 using ConfigFactory.Avalonia.Helpers;
 using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
+using ConfigFactory.Generics;
 using System.Reflection;
 
 namespace ConfigFactory.Avalonia.Builders;
