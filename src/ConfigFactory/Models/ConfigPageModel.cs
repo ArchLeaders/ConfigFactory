@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace ConfigFactory.Models;
 
+/// <summary>
+/// An observable view model for the UI implemented ConfigPage control
+/// </summary>
 public partial class ConfigPageModel : ObservableObject
 {
     /// <summary>
