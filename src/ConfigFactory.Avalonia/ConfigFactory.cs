@@ -24,6 +24,11 @@ public static class ConfigFactory
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel) where T : ConfigModule<T>, new() => Append(configPageModel, ConfigModule<T>.Shared);
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel, T module) where T : IConfigModule
     {
+        configPageModel.PrimaryButtonEvent += () => {
+            module.Save();
+            return Task.CompletedTask;
+        };
+
         foreach ((_, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
             object? value = info.GetValue(module, null);
             if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
