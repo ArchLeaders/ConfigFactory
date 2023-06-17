@@ -46,6 +46,15 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         Group = "Less Common")]
     private string _someOtherField = string.Empty;
 
+    [ObservableProperty]
+    [property: BrowserConfig(BrowserMode = BrowserMode.OpenFile)]
+    [property: Config(
+        Header = "Some Enum Field",
+        Description = "Extended (probably redundant) description of Some Enum Field, a enum-based configuration",
+        Category = "General",
+        Group = "Less Common")]
+    private BrowserMode _someEnumField = BrowserMode.SaveFile;
+
     public static ObservableCollection<string> GetThings()
     {
         return new() {
