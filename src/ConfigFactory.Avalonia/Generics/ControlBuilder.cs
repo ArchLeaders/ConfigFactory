@@ -1,4 +1,5 @@
 ﻿using ConfigFactory.Core;
+using System.Reflection;
 
 namespace ConfigFactory.Avalonia.Generics;
 
@@ -6,6 +7,6 @@ public abstract class ControlBuilder<T> : IControlBuilder where T : ControlBuild
 {
     public static T Shared { get; } = new();
 
-    public abstract object? Build(IConfigModule context, string propertyName);
+    public abstract object? Build(IConfigModule context, PropertyInfo propertyInfo);
     public abstract bool IsValid(object? value);
 }

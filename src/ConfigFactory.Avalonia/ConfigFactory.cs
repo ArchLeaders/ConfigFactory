@@ -24,14 +24,14 @@ public static class ConfigFactory
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel) where T : ConfigModule<T>, new() => Append(configPageModel, ConfigModule<T>.Shared);
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel, T module) where T : IConfigModule
     {
-        foreach ((string name, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
+        foreach ((_, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
             object? value = info.GetValue(module, null);
             if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
                 ConfigGroup group = GetConfigGroup(configPageModel, attribute);
                 group.Items.Add(new() {
                     Header = attribute.Header,
                     Description = attribute.Description,
-                    Content = builder.Build(module, name)
+                    Content = builder.Build(module, info)
                 });
             }
         }
