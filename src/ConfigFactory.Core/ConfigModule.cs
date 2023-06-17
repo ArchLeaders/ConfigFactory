@@ -12,14 +12,14 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     /// <summary>
     /// The name of the <see cref="ConfigModule{T}"/>
-    /// <para><i>Default: <see langword="nameof(T)"/></i></para>
+    /// <para><i>Default: <see langword="typeof(T).Name"/></i></para>
     /// </summary>
     [JsonIgnore]
     public virtual string Name { get; }
 
     /// <summary>
     /// The local path of the serialized config file
-    /// <para><i>Default: %appdata%/<see langword="nameof(T)"/>/Config.json</i></para>
+    /// <para><i>Default: %appdata%/<see langword="typeof(T).Name"/>/Config.json</i></para>
     /// </summary>
     [JsonIgnore]
     public virtual string LocalPath { get; }
@@ -29,7 +29,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     public ConfigModule()
     {
-        Name = nameof(T);
+        Name = typeof(T).Name;
         LocalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Name, "Config.json");
         Properties = ConfigProperties.Generate<T>();
     }
