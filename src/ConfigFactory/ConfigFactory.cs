@@ -9,9 +9,6 @@ namespace ConfigFactory;
 public static class ConfigFactory
 {
     private static readonly List<IControlBuilder> _builders = new();
-    private static event Action? RegisterDefaults;
-
-    static ConfigFactory() => RegisterDefaults?.Invoke();
 
     public static ConfigPageModel Build<T>() where T : ConfigModule<T>, new() => Build(ConfigModule<T>.Shared);
     public static ConfigPageModel Build<T>(T module) where T : IConfigModule
