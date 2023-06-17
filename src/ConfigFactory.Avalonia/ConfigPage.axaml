@@ -22,7 +22,7 @@
                 <ItemsControl Width="200"
                               Margin="10"
                               HorizontalAlignment="Right"
-                              Items="{Binding Categories}">
+                              ItemsSource="{Binding Categories}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,15" RowDefinitions="Auto,Auto,*">
@@ -35,7 +35,7 @@
                                         Height="1"
                                         Margin="0,6"
                                         Background="{DynamicResource SystemChromeHighColor}" />
-                                <ItemsControl Grid.Row="2" Items="{Binding Groups}">
+                                <ItemsControl Grid.Row="2" ItemsSource="{Binding Groups}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <ToggleButton Margin="0,0,0,3"
@@ -94,10 +94,12 @@
                                    FontSize="20"
                                    FontWeight="SemiBold"
                                    Text="{Binding Header}" />
-                        <ItemsControl Grid.Row="1" Items="{Binding Items}">
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:ConfigItem Description="{Binding Description}" Header="{Binding Header}" />
+                                    <local:ConfigItem Content="{Binding Content}"
+                                                      Description="{Binding Description}"
+                                                      Header="{Binding Header}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
