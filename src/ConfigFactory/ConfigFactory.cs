@@ -18,7 +18,7 @@ public static class ConfigFactory
     public static ConfigPageModel Build<T>() where T : ConfigModule<T>, new() => Build(ConfigModule<T>.Shared);
 
     /// <inheritdoc cref="Build{T}"/>
-    public static ConfigPageModel Build<T>(T module) where T : IConfigModule
+    public static ConfigPageModel Build(IConfigModule module)
     {
         ConfigPageModel configPageModel = new();
         configPageModel.Append(module);
@@ -34,7 +34,7 @@ public static class ConfigFactory
     public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel) where T : ConfigModule<T>, new() => Append(configPageModel, ConfigModule<T>.Shared);
 
     /// <inheritdoc cref="Append{T}(ConfigPageModel)"/>
-    public static ConfigPageModel Append<T>(this ConfigPageModel configPageModel, T module) where T : IConfigModule
+    public static ConfigPageModel Append(this ConfigPageModel configPageModel, IConfigModule module)
     {
         configPageModel.PrimaryButtonEvent += () => {
             module.Save();
