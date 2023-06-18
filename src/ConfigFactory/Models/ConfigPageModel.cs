@@ -91,9 +91,9 @@ public partial class ConfigPageModel : ObservableObject
     [RelayCommand]
     public async Task SecondaryRelay()
     {
-        await(SecondaryButtonEvent?.Invoke()
+        await (SecondaryButtonEvent?.Invoke()
             ?? Task.CompletedTask);
-        await(SecondaryButtonCompletedEvent?.Invoke()
+        await (SecondaryButtonCompletedEvent?.Invoke()
             ?? Task.CompletedTask);
     }
 
