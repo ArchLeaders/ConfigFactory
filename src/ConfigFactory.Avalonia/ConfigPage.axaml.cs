@@ -6,6 +6,7 @@ public partial class ConfigPage : UserControl
 {
     static ConfigPage()
     {
+        BooleanControlBuilder.Shared.Register();
         TextControlBuilder.Shared.Register();
         EnumControlBuilder.Shared.Register();
     }
