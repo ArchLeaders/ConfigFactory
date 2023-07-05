@@ -16,6 +16,14 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
     private string _someField = string.Empty;
 
     [ObservableProperty]
+    [property: Config(
+        Header = "Bool Field",
+        Description = "Extended (probably redundant) description of Bool Field, a toggle-based configuration",
+        Category = "General",
+        Group = "Common")]
+    private bool _boolField = false;
+
+    [ObservableProperty]
     [property: BrowserConfig(
         BrowserMode = BrowserMode.OpenFile,
         Filter = "Backups:*.bak",
