@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Dock.Model.Mvvm.Controls;
 using System.Collections.ObjectModel;
 
 namespace ConfigFactory.Models;
@@ -7,7 +8,7 @@ namespace ConfigFactory.Models;
 /// <summary>
 /// An observable view model for the UI implemented ConfigPage control
 /// </summary>
-public partial class ConfigPageModel : ObservableObject
+public partial class ConfigPageModel : Document
 {
     /// <summary>
     /// The loaded <see cref="ConfigCategory"/> objects
