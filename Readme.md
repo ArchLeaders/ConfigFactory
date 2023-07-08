@@ -175,9 +175,19 @@ Install with NuGet or add the source code as a git submodule.
 
 ## NuGet
 
-*Coming soon™*
+```powershell
+# ViewModel interface package (custom UI implementation)
+Install-Package ConfigFactory
+
+# Interface package (for project library)
+Install-Package ConfigFactory.Core
+
+# Avalonia UI package
+Install-Package ConfigFactory.Avalonia
+```
 
 ## Git Submodule
+
 ```powershell
 git submodule add "https://github.com/ArchLeaders/ConfigFactory.git" "lib/ConfigFactory"
 ```
