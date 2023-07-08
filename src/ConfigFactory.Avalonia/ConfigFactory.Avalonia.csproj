@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+  	<None Include="..\..\Readme.md">
+      <Pack>True</Pack>
+  	  <PackagePath>\</PackagePath>
+  	</None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.0" />
   </ItemGroup>
 
