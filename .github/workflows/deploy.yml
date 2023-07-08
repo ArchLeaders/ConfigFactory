@@ -7,6 +7,13 @@ on:
 
 env:
   nuget: "https://api.nuget.org/v3/index.json"
+  authors: ArchLeaders
+  description: |
+    Generic library for creating extensible config arrangements to be used with a UI builder
+  readme: ../../Readme.md
+  repo: https://github.com/ArchLeaders/ConfigFactory
+  spdx: AGPL-3.0-or-later
+  tags: configuration;settings;avaloniaui;factory
 
 jobs:
   deploy:
@@ -54,7 +61,14 @@ jobs:
           --no-restore \
           -c Release \
           -o ${{ env.bin }} \
-          -p:PackageVersion=${{ steps.version.outputs.version-without-v }}
+          -P:Authors=${{ env.authors }} \
+          -P:Description=${{ env.description }} \
+          -p:PackageLicenseExpression=${{ env.spdx }} \
+          -P:PackageProjectUrl=${{ env.repo }} \
+          -P:PackageReadmeFile=${{ env.readme }} \
+          -P:PackageTags=${{ env.tags }} \
+          -p:PackageVersion=${{ steps.version.outputs.version-without-v }} \
+          -P:RepositoryUrl=${{ env.repo }}
 
       - name: "Push package"
         shell: bash
