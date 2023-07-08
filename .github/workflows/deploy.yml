@@ -21,7 +21,7 @@ jobs:
           - name: ConfigFactory.Avalonia
 
     env:
-      csproj: src/${{ matrix.config.name }}/${{ matrix.config.name }}
+      csproj: src/${{ matrix.config.name }}/${{ matrix.config.name }}.csproj
       bin: src/${{ matrix.config.name }}/bin
 
     steps:
