@@ -64,7 +64,7 @@ jobs:
           -o ${{ env.bin }} \
           -p:Authors="${{ env.authors }}" \
           -p:Description="${{ env.description }}" \
-          -p:pack="${{ env.readme }}"
+          -p:Pack="${{ env.readme }}" \
           -p:PackageLicenseExpression="${{ env.spdx }}" \
           -p:PackageProjectUrl="${{ env.repo }}" \
           -p:PackageReadmeFile="${{ env.readme-ref }}" \
