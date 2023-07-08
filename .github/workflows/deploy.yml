@@ -61,14 +61,14 @@ jobs:
           --no-restore \
           -c Release \
           -o ${{ env.bin }} \
-          -P:Authors="${{ env.authors }}" \
-          -P:Description="${{ env.description }}" \
+          -p:Authors="${{ env.authors }}" \
+          -p:Description="${{ env.description }}" \
           -p:PackageLicenseExpression="${{ env.spdx }}" \
-          -P:PackageProjectUrl="${{ env.repo }}" \
-          -P:PackageReadmeFile="${{ env.readme }}" \
-          -P:PackageTags="${{ env.tags }}" \
+          -p:PackageProjectUrl="${{ env.repo }}" \
+          -p:PackageReadmeFile="${{ env.readme }}" \
+          -p:PackageTags="${{ env.tags }}" \
           -p:PackageVersion="${{ steps.version.outputs.version-without-v }}" \
-          -P:RepositoryUrl="${{ env.repo }}"
+          -p:RepositoryUrl="${{ env.repo }}"
 
       - name: "Push package"
         shell: bash
