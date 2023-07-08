@@ -76,17 +76,15 @@ public static class ConfigFactory
     /// <returns></returns>
     private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, ConfigAttribute attribute)
     {
-        bool isFirstCategory = false;
-
         ConfigCategory category = configPageModel.Categories.FirstOrDefault(
             x => x.Header == attribute.Category) is ConfigCategory _category
-            ? _category : new(parent: configPageModel, attribute.Category, out isFirstCategory);
+            ? _category : new(parent: configPageModel, attribute.Category);
 
         ConfigGroup group = category.Groups.FirstOrDefault(
             x => x.Header == attribute.Group) is ConfigGroup _group
             ? _group : new(parent: category, attribute.Group);
 
-        if (isFirstCategory) {
+        if (configPageModel.Categories.Count == 1 && configPageModel.Categories[0].Groups.Count == 1) {
             configPageModel.SelectedGroup = group;
         }
 

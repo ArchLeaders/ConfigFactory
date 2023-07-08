@@ -22,10 +22,9 @@ public partial class ConfigCategory : ObservableObject
     /// <param name="parent"></param>
     /// <param name="header"></param>
     /// <param name="isFirstCategory"></param>
-    internal ConfigCategory(ConfigPageModel parent, string header, out bool isFirstCategory)
+    internal ConfigCategory(ConfigPageModel parent, string header)
     {
         _header = header;
         parent.Categories.Add(this);
-        isFirstCategory = true;
     }
 }
