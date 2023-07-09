@@ -10,6 +10,8 @@ namespace ConfigFactory.Models;
 /// </summary>
 public partial class ConfigPageModel : Document
 {
+    internal Dictionary<string, ConfigItem> ItemsMap { get; } = new();
+
     /// <summary>
     /// The loaded <see cref="ConfigCategory"/> objects
     /// </summary>

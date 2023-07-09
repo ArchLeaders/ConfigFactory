@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,8 +10,14 @@ namespace ConfigFactory.Core;
 
 public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T : ConfigModule<T>, new()
 {
+    protected virtual string SuccessColor { get; } = "#FF31C059";
+    protected virtual string FailureColor { get; } = "#FFE64032";
+
     IConfigModule IConfigModule.Shared => Shared;
     public static T Shared { get; } = Load();
+
+    [JsonIgnore]
+    public IValidationInterface? ValidationInterface { get; set; }
 
     /// <summary>
     /// The name of the <see cref="ConfigModule{T}"/>
@@ -27,6 +36,9 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     [JsonIgnore]
     public ConfigProperties Properties { get; }
 
+    [JsonIgnore]
+    public Dictionary<string, (Func<object?, bool>, string?)> Validators { get; } = new();
+
     public ConfigModule()
     {
         Name = typeof(T).Name;
@@ -44,7 +56,26 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         }
 
         using FileStream fs = File.OpenRead(LocalPath);
-        return JsonSerializer.Deserialize<T>(fs)!;
+        T result = JsonSerializer.Deserialize<T>(fs)!;
+
+        object?[] parameters = { null };
+        foreach ((var name, _) in Properties) {
+            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(result, parameters);
+        }
+
+        return result;
+    }
+
+    protected void SetValidation<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
+        string? invalidErrorMessage = null, string? validationFailureColor = null, string? validationSuccessColor = null)
+    {
+        PropertyInfo propertyInfo = (PropertyInfo)((MemberExpression)property.Body).Member;
+
+        Validators.TryAdd(propertyInfo.Name,
+            (x => validation((TProperty?)x), invalidErrorMessage));
+
+        ValidationInterface?.SetValidationColor(propertyInfo,
+            validation(property.Compile()()) ? validationSuccessColor ?? SuccessColor : validationFailureColor ?? FailureColor);
     }
 
     public void Save()
@@ -52,5 +83,23 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
         using FileStream fs = File.Create(LocalPath);
         JsonSerializer.Serialize(fs, (T)this);
+    }
+
+    public bool Validate(out string? message)
+    {
+        foreach ((var name, (var validate, var errorMessage)) in Validators) {
+            PropertyInfo propertyInfo = Properties[name].info;
+            if (validate(propertyInfo.GetValue(this)) is bool isValid) {
+                ValidationInterface?.SetValidationColor(propertyInfo, isValid ? SuccessColor : FailureColor);
+
+                if (!isValid) {
+                    message = errorMessage;
+                    return false;
+                }
+            }
+        }
+
+        message = "Validation Successful";
+        return true;
     }
 }

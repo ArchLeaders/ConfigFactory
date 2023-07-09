@@ -1,4 +1,5 @@
-﻿using ConfigFactory.Core;
+﻿using ConfigFactory.Components;
+using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
 using ConfigFactory.Generics;
 using ConfigFactory.Models;
@@ -45,13 +46,19 @@ public static class ConfigFactory
             object? value = info.GetValue(module, null);
             if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
                 ConfigGroup group = GetConfigGroup(configPageModel, attribute);
-                group.Items.Add(new ConfigItem {
+                ConfigItem item = new() {
                     Content = builder.Build(module, info),
                     Description = attribute.Description,
                     Header = attribute.Header
-                });
+                };
+
+                group.Items.Add(item);
+                configPageModel.ItemsMap.TryAdd($"{attribute.Category}/{attribute.Group}/{info.Name}", item);
             }
         }
+
+        module.ValidationInterface = new ValidationInterface(configPageModel);
+        module.Validate(out _);
 
         return configPageModel;
     }

@@ -1,4 +1,5 @@
-﻿using ConfigFactory.Core.Models;
+﻿using ConfigFactory.Core.Components;
+using ConfigFactory.Core.Models;
 
 namespace ConfigFactory.Core;
 
@@ -7,6 +8,16 @@ namespace ConfigFactory.Core;
 /// </summary>
 public interface IConfigModule
 {
+    /// <summary>
+    /// <see cref="IValidationInterface"/> set by the frontend implementation
+    /// </summary>
+    public IValidationInterface? ValidationInterface { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary of property validators
+    /// </summary>
+    public Dictionary<string, (Func<object?, bool>, string?)> Validators { get; }
+
     public IConfigModule Shared { get; }
 
     /// <summary>
@@ -24,4 +35,12 @@ public interface IConfigModule
     /// Saves the current <see cref="IConfigModule"/> instance
     /// </summary>
     public void Save();
+
+    /// <summary>
+    /// Validates the properties and sends the invalid error message to the output <paramref name="message"/>
+    /// </summary>
+    /// <returns>
+    /// <see langword="true"/> if the validation was successful; <see langword="false"/> if the validation failed
+    /// </returns>
+    public bool Validate(out string? message);
 }
