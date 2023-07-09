@@ -14,6 +14,9 @@ public partial class ConfigItem : ObservableValidator
     private string _description = string.Empty;
 
     [ObservableProperty]
+    private string _validationColor = "#00FFFFFF";
+
+    [ObservableProperty]
     [Required]
     private object? _content;
 }
