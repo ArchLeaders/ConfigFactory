@@ -96,6 +96,23 @@ public partial class SomeConfig : ConfigModule<SomeConfig>
 }
 ```
 
+#### Property Validation
+
+Along with creating properties, you can also set custom validations for them.
+
+When using the ObservableProperty attribute, implement the partial `OnPropertyNameChanged` function to register a custom validation.
+
+```cs
+partial void OnSomePropertyChanged(string value)
+{
+    SetValidation(() => SomeProperty, value => {
+        return value is "Some Proper Value";
+    });
+}
+```
+
+\**(In order to achieve live validation, this function must be called in the OnChanged function/event of the property.)*
+
 ## Building the Config Module for the Frontend
 
 Building a config module is a simple as calling the static function `ConfigFactory.Build<T>()` where `T` implements `ConfigModule<T>`, or `ConfigFactory.Build(IConfigModule module)` with other `IConfigModule` implementations.
