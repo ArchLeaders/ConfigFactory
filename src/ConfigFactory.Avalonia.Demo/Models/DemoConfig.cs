@@ -71,4 +71,11 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
             { "Entry Three" },
         };
     }
+
+    partial void OnBoolFieldChanged(bool value)
+    {
+        SetValidation(() => BoolField, value => {
+            return value is true;
+        });
+    }
 }
