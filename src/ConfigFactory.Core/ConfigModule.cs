@@ -70,6 +70,14 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         return result;
     }
 
+    public void Reset()
+    {
+        IConfigModule config = Load();
+        foreach ((var name, (var property, _)) in Properties) {
+            property.SetValue(Shared, config.Properties[name].Property.GetValue(config));
+        }
+    }
+
     protected void SetValidation<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
         string? invalidErrorMessage = null, string? validationFailureColor = null, string? validationSuccessColor = null)
     {

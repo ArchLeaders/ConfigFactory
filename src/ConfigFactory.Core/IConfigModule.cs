@@ -32,6 +32,12 @@ public interface IConfigModule
     public IConfigModule Load();
 
     /// <summary>
+    /// Resets the <see cref="Properties"/> to their last saved values
+    /// </summary>
+    /// <returns></returns>
+    public void Reset();
+
+    /// <summary>
     /// Saves the current <see cref="IConfigModule"/> instance
     /// </summary>
     public void Save();
