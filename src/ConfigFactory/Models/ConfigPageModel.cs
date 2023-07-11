@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ConfigFactory.Core;
 using Dock.Model.Mvvm.Controls;
 using System.Collections.ObjectModel;
 
@@ -10,7 +11,8 @@ namespace ConfigFactory.Models;
 /// </summary>
 public partial class ConfigPageModel : Document
 {
-    internal Dictionary<string, ConfigItem> ItemsMap { get; } = new();
+    public Dictionary<string, IConfigModule> ConfigModules { get; } = new();
+    public Dictionary<string, ConfigItem> ItemsMap { get; } = new();
 
     /// <summary>
     /// The loaded <see cref="ConfigCategory"/> objects
