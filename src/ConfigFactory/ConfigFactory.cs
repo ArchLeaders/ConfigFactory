@@ -58,7 +58,7 @@ public static class ConfigFactory
         }
 
         module.ValidationInterface = new ValidationInterface(configPageModel);
-        module.Validate(out _);
+        module.Validate();
 
         return configPageModel;
     }

@@ -1,5 +1,7 @@
-﻿using ConfigFactory.Core.Components;
+﻿using ConfigFactory.Core.Attributes;
+using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
+using System.Reflection;
 
 namespace ConfigFactory.Core;
 
@@ -37,10 +39,16 @@ public interface IConfigModule
     public void Save();
 
     /// <summary>
-    /// Validates the properties and sends the invalid error message to the output <paramref name="message"/>
+    /// Validates each property registered in the <see cref="Validators"/> collection
     /// </summary>
     /// <returns>
     /// <see langword="true"/> if the validation was successful; <see langword="false"/> if the validation failed
     /// </returns>
-    public bool Validate(out string? message);
+    public virtual bool Validate() => Validate(out _, out _);
+
+    /// <inheritdoc cref="Validate()"/>
+    public virtual bool Validate(out string? message) => Validate(out message, out _);
+
+    /// <inheritdoc cref="Validate()"/>
+    public bool Validate(out string? message, out (PropertyInfo? info, ConfigAttribute? attribute) target);
 }

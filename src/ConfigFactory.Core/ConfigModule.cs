@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ConfigFactory.Core.Attributes;
 using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
 using System.Linq.Expressions;
@@ -89,10 +90,13 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         JsonSerializer.Serialize(fs, (T)this);
     }
 
-    public bool Validate(out string? message)
+    public bool Validate() => Validate(out _, out _);
+    public bool Validate(out string? message) => Validate(out message, out _);
+    public bool Validate(out string? message, out (PropertyInfo? info, ConfigAttribute? attribute) target)
     {
         foreach ((var name, (var validate, var errorMessage)) in Validators) {
-            PropertyInfo propertyInfo = Properties[name].info;
+            target = Properties[name];
+            PropertyInfo propertyInfo = target.info!;
             if (validate(propertyInfo.GetValue(this)) is bool isValid) {
                 ValidationInterface?.SetValidationColor(propertyInfo, isValid ? SuccessColor : FailureColor);
 
@@ -103,6 +107,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
             }
         }
 
+        target = (null, null);
         message = "Validation Successful";
         return true;
     }
