@@ -18,7 +18,7 @@ public interface IConfigModule
     /// </summary>
     public Dictionary<string, (Func<object?, bool>, string?)> Validators { get; }
 
-    public IConfigModule Shared { get; }
+    public IConfigModule Shared { get; set; }
 
     /// <summary>
     /// Cached runtime reflected properties used by the UI builder

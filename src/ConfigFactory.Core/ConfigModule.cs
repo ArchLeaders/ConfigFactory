@@ -13,8 +13,12 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     protected virtual string SuccessColor { get; } = "#FF31C059";
     protected virtual string FailureColor { get; } = "#FFE64032";
 
-    IConfigModule IConfigModule.Shared => Shared;
-    public static T Shared { get; } = Load();
+    IConfigModule IConfigModule.Shared {
+        get => Shared;
+        set => Shared = (T)value;
+    }
+
+    public static T Shared { get; set; } = Load();
 
     [JsonIgnore]
     public IValidationInterface? ValidationInterface { get; set; }
