@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace ConfigFactory.Core.Models;
 
-public class ConfigProperties : Dictionary<string, (PropertyInfo info, ConfigAttribute attribute)>
+public class ConfigProperties : Dictionary<string, ConfigProperty>
 {
     public static ConfigProperties Generate<T>()
     {
@@ -33,7 +33,7 @@ public class ConfigProperties : Dictionary<string, (PropertyInfo info, ConfigAtt
     private ConfigProperties(IEnumerable<(PropertyInfo info, ConfigAttribute? attribute)> map)
     {
         foreach ((var info, var attribute) in map) {
-            Add(info.Name, (info, attribute!));
+            Add(info.Name, new(info, attribute!));
         }
     }
 }

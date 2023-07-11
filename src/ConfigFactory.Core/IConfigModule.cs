@@ -1,7 +1,5 @@
-﻿using ConfigFactory.Core.Attributes;
-using ConfigFactory.Core.Components;
+﻿using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
-using System.Reflection;
 
 namespace ConfigFactory.Core;
 
@@ -50,5 +48,5 @@ public interface IConfigModule
     public virtual bool Validate(out string? message) => Validate(out message, out _);
 
     /// <inheritdoc cref="Validate()"/>
-    public bool Validate(out string? message, out (PropertyInfo? info, ConfigAttribute? attribute) target);
+    public bool Validate(out string? message, out ConfigProperty target);
 }
