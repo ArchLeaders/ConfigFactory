@@ -50,27 +50,28 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         Properties = ConfigProperties.Generate<T>();
     }
 
-    private static T Load() => (T)(new T() as IConfigModule).Load();
-    IConfigModule IConfigModule.Load()
+    IConfigModule IConfigModule.Load() => Load();
+    private static T Load()
     {
-        if (!File.Exists(LocalPath)) {
-            T config = new();
+        T config = new();
+
+        if (!File.Exists(config.LocalPath)) {
             config.Save();
             return config;
         }
 
-        using FileStream fs = File.OpenRead(LocalPath);
-        T result = JsonSerializer.Deserialize<T>(fs)!;
+        using FileStream fs = File.OpenRead(config.LocalPath);
+        config = JsonSerializer.Deserialize<T>(fs)!;
 
         object?[] parameters = { null };
-        foreach ((var name, _) in Properties) {
-            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(result, parameters);
+        foreach ((var name, _) in config.Properties) {
+            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, parameters);
         }
 
-        return result;
+        return config;
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         IConfigModule config = Load();
         foreach ((var name, (var property, _)) in Properties) {
@@ -78,7 +79,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         }
     }
 
-    protected void SetValidation<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
+    protected virtual void SetValidation<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
         string? invalidErrorMessage = null, string? validationFailureColor = null, string? validationSuccessColor = null)
     {
         PropertyInfo propertyInfo = (PropertyInfo)((MemberExpression)property.Body).Member;
@@ -100,7 +101,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     /// </summary>
     public event Action OnSave = () => { };
 
-    public void Save()
+    public virtual void Save()
     {
         if (OnSaving()) {
             Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
