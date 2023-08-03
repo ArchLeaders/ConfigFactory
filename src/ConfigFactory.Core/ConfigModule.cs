@@ -32,7 +32,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     /// <summary>
     /// The local path of the serialized config file
-    /// <para><i>Default: %appdata%/<see langword="typeof(T).Name"/>/Config.json</i></para>
+    /// <para><i>Default: %localappdata%/<see langword="typeof(T).Name"/>/Config.json</i></para>
     /// </summary>
     [JsonIgnore]
     public virtual string LocalPath { get; }
