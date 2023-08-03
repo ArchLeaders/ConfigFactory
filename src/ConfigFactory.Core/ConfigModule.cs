@@ -90,11 +90,24 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
             validation(property.Compile()()) ? validationSuccessColor ?? SuccessColor : validationFailureColor ?? FailureColor);
     }
 
+    /// <summary>
+    /// Executed before saving; return <see langword="false"/> to stop saving
+    /// </summary>
+    public event Func<bool> OnSaving = () => true;
+
+    /// <summary>
+    /// Executed after saving
+    /// </summary>
+    public event Action OnSave = () => { };
+
     public void Save()
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
-        using FileStream fs = File.Create(LocalPath);
-        JsonSerializer.Serialize(fs, (T)this);
+        if (OnSaving()) {
+            Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
+            using FileStream fs = File.Create(LocalPath);
+            JsonSerializer.Serialize(fs, (T)this);
+            OnSave();
+        }
     }
 
     public bool Validate() => Validate(out _, out _);
