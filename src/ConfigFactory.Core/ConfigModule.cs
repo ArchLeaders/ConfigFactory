@@ -111,9 +111,9 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         }
     }
 
-    public bool Validate() => Validate(out _, out _);
-    public bool Validate(out string? message) => Validate(out message, out _);
-    public bool Validate(out string? message, out ConfigProperty target)
+    public virtual bool Validate() => Validate(out _, out _);
+    public virtual bool Validate(out string? message) => Validate(out message, out _);
+    public virtual bool Validate(out string? message, out ConfigProperty target)
     {
         foreach ((var name, (var validate, var errorMessage)) in Validators) {
             target = Properties[name];
