@@ -83,33 +83,22 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
     }
 
     /// <summary>
-    /// Example implementation of i18n using the .resx Embedded Resource
+    /// Example implementation of internationalization and localization using the .resx Embedded Resource
     /// </summary>
     public override string Translate(string input)
     {
-        string result = input;
-        PropertyInfo? prop = null;
 
-        if (!string.IsNullOrWhiteSpace(input))
-        {
-            // get resource property
-            prop = (typeof(Translations))
+        if (string.IsNullOrWhiteSpace(input))
+            return input;
+
+        // resolve property
+        PropertyInfo? prop = (typeof(Translations))
                 .GetProperty(input, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
-        }
 
-        if (prop != null)
-        {
-            // use property getter
-            var getterInfo = prop.GetGetMethod(nonPublic: true);
-            if (getterInfo != null)
-            {
-                if (Delegate.CreateDelegate(typeof(Func<string>), getterInfo) is Func<string> fn)
-                {
-                    result = fn();
-                }
-            }
-        }
+        // resolve getter
+        MethodInfo? getterInfo = prop?.GetGetMethod(nonPublic: true);
 
-        return result;
+        // invoke getter
+        return getterInfo?.Invoke(null, null) as string ?? input;
     }
 }
