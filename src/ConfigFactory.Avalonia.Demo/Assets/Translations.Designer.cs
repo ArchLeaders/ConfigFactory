@@ -65,7 +65,7 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Bool_Field {
             get {
-                return ResourceManager.GetString("Bool_Field", resourceCulture);
+                return ResourceManager.GetString("Bool Field", resourceCulture);
             }
         }
         
@@ -74,16 +74,16 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Browser_Field {
             get {
-                return ResourceManager.GetString("Browser_Field", resourceCulture);
+                return ResourceManager.GetString("Browser Field", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Common.
         /// </summary>
-        public static string Common_Group {
+        public static string Common {
             get {
-                return ResourceManager.GetString("Common_Group", resourceCulture);
+                return ResourceManager.GetString("Common", resourceCulture);
             }
         }
         
@@ -92,7 +92,7 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Dropdown_Field {
             get {
-                return ResourceManager.GetString("Dropdown_Field", resourceCulture);
+                return ResourceManager.GetString("Dropdown Field", resourceCulture);
             }
         }
         
@@ -101,7 +101,7 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Enum_Field {
             get {
-                return ResourceManager.GetString("Enum_Field", resourceCulture);
+                return ResourceManager.GetString("Enum Field", resourceCulture);
             }
         }
         
@@ -110,16 +110,25 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Example_Description {
             get {
-                return ResourceManager.GetString("Example_Description", resourceCulture);
+                return ResourceManager.GetString("Example Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
-        public static string General_Category {
+        public static string General {
             get {
-                return ResourceManager.GetString("General_Category", resourceCulture);
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Less Common.
+        /// </summary>
+        public static string Less_Common {
+            get {
+                return ResourceManager.GetString("Less Common", resourceCulture);
             }
         }
         
@@ -128,7 +137,7 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Other_Field {
             get {
-                return ResourceManager.GetString("Other_Field", resourceCulture);
+                return ResourceManager.GetString("Other Field", resourceCulture);
             }
         }
         
@@ -137,16 +146,7 @@ namespace ConfigFactory.Avalonia.Demo.Assets {
         /// </summary>
         public static string Text_Field {
             get {
-                return ResourceManager.GetString("Text_Field", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uncommon.
-        /// </summary>
-        public static string Uncommon_Group {
-            get {
-                return ResourceManager.GetString("Uncommon_Group", resourceCulture);
+                return ResourceManager.GetString("Text Field", resourceCulture);
             }
         }
     }

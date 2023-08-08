@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bool_Field" xml:space="preserve">
+  <data name="Bool Field" xml:space="preserve">
     <value>Some Bool Field</value>
   </data>
-  <data name="Browser_Field" xml:space="preserve">
+  <data name="Browser Field" xml:space="preserve">
     <value>Some Browser Field</value>
   </data>
-  <data name="Common_Group" xml:space="preserve">
+  <data name="Common" xml:space="preserve">
     <value>Common</value>
   </data>
-  <data name="Dropdown_Field" xml:space="preserve">
+  <data name="Dropdown Field" xml:space="preserve">
     <value>Some Dropdown Field</value>
   </data>
-  <data name="Enum_Field" xml:space="preserve">
+  <data name="Enum Field" xml:space="preserve">
     <value>Some Other Field</value>
   </data>
-  <data name="Example_Description" xml:space="preserve">
+  <data name="Example Description" xml:space="preserve">
     <value>Extended (probably redundant) description of Some Field, a text-based configuration</value>
   </data>
-  <data name="General_Category" xml:space="preserve">
+  <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Other_Field" xml:space="preserve">
+  <data name="Less Common" xml:space="preserve">
+    <value>Less Common</value>
+  </data>
+  <data name="Other Field" xml:space="preserve">
     <value>Some Enum Field</value>
   </data>
-  <data name="Text_Field" xml:space="preserve">
+  <data name="Text Field" xml:space="preserve">
     <value>Some Text Field</value>
-  </data>
-  <data name="Uncommon_Group" xml:space="preserve">
-    <value>Uncommon</value>
   </data>
 </root>

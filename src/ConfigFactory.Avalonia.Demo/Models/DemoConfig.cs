@@ -2,9 +2,7 @@
 using ConfigFactory.Avalonia.Demo.Assets;
 using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
-using System;
 using System.Collections.ObjectModel;
-using System.Reflection;
 
 namespace ConfigFactory.Avalonia.Demo.Models;
 
@@ -12,18 +10,18 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
 {
     [ObservableProperty]
     [property: Config(
-        Header = "Text_Field",
-        Description = "Example_Description",
-        Category = "General_Category",
-        Group = "Common_Group")]
+        Header = "Text Field",
+        Description = "Example Description",
+        Category = "General",
+        Group = "Common")]
     private string _someField = string.Empty;
 
     [ObservableProperty]
     [property: Config(
-        Header = "Bool_Field",
-        Description = "Example_Description",
-        Category = "General_Category",
-        Group = "Common_Group")]
+        Header = "Bool Field",
+        Description = "Example Description",
+        Category = "General",
+        Group = "Common")]
     private bool _boolField = false;
 
     [ObservableProperty]
@@ -32,38 +30,38 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         Filter = "Backups:*.bak",
         InstanceBrowserKey = "some-browser-field-key")]
     [property: Config(
-        Header = "Browser_Field",
-        Description = "Example_Description",
-        Category = "General_Category",
-        Group = "Common_Group")]
+        Header = "Browser Field",
+        Description = "Example Description",
+        Category = "General",
+        Group = "Common")]
     private string _someBrowserField = string.Empty;
 
     [ObservableProperty]
     [property: DropdownConfig(
         RuntimeItemsSourceMethodName = "GetThings")]
     [property: Config(
-        Header = "Dropdown_Field",
-        Description = "Example_Description",
-        Category = "General_Category",
-        Group = "Common_Group")]
+        Header = "Dropdown Field",
+        Description = "Example Description",
+        Category = "General",
+        Group = "Common")]
     private string _someDropdownField = string.Empty;
 
     [ObservableProperty]
     [property: BrowserConfig(BrowserMode = BrowserMode.OpenFile)]
     [property: Config(
-        Header = "Other_Field",
+        Header = "Other Field",
         Description = "This string is not included in the translations resource",
-        Category = "General_Category",
-        Group = "Uncommon_Group")]
+        Category = "General",
+        Group = "Less Common")]
     private string _someOtherField = string.Empty;
 
     [ObservableProperty]
     [property: BrowserConfig(BrowserMode = BrowserMode.OpenFile)]
     [property: Config(
-        Header = "Enum_Field",
+        Header = "Enum Field",
         Description = "This string is also not included in the translations resource",
-        Category = "General_Category",
-        Group = "Uncommon_Group")]
+        Category = "General",
+        Group = "Less Common")]
     private BrowserMode _someEnumField = BrowserMode.SaveFile;
 
     public static ObservableCollection<string> GetThings(IConfigModule context)
@@ -91,14 +89,6 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         if (string.IsNullOrWhiteSpace(input))
             return input;
 
-        // resolve property
-        PropertyInfo? prop = (typeof(Translations))
-                .GetProperty(input, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
-
-        // resolve getter
-        MethodInfo? getterInfo = prop?.GetGetMethod(nonPublic: true);
-
-        // invoke getter
-        return getterInfo?.Invoke(null, null) as string ?? input;
+        return Translations.ResourceManager?.GetString(input, Translations.Culture) ?? input;
     }
 }

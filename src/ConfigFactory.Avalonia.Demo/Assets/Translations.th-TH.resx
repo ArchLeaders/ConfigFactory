@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bool_Field" xml:space="preserve">
+  <data name="Bool Field" xml:space="preserve">
     <value>ช่องคำตอบ Bool</value>
   </data>
-  <data name="Browser_Field" xml:space="preserve">
+  <data name="Browser Field" xml:space="preserve">
     <value>ช่องคำตอบ Browser</value>
   </data>
-  <data name="Common_Group" xml:space="preserve">
+  <data name="Common" xml:space="preserve">
     <value>ทั่วไป</value>
   </data>
-  <data name="Dropdown_Field" xml:space="preserve">
+  <data name="Dropdown Field" xml:space="preserve">
     <value>ช่องคำตอบ Dropdown</value>
   </data>
-  <data name="Enum_Field" xml:space="preserve">
+  <data name="Enum Field" xml:space="preserve">
     <value>ช่องคำตอบ Enum</value>
   </data>
-  <data name="Example_Description" xml:space="preserve">
+  <data name="Example Description" xml:space="preserve">
     <value>คำอธิบายของกล่องคำตอบ</value>
   </data>
-  <data name="General_Category" xml:space="preserve">
+  <data name="General" xml:space="preserve">
     <value>หลัก</value>
   </data>
-  <data name="Other_Field" xml:space="preserve">
+  <data name="Less Common" xml:space="preserve">
+    <value>ผิดปกติ</value>
+  </data>
+  <data name="Other Field" xml:space="preserve">
     <value>กล่องคำตอบอื่น</value>
   </data>
-  <data name="Text_Field" xml:space="preserve">
+  <data name="Text Field" xml:space="preserve">
     <value>ช่องคำตอบ Text</value>
-  </data>
-  <data name="Uncommon_Group" xml:space="preserve">
-    <value>ผิดปกติ</value>
   </data>
 </root>
