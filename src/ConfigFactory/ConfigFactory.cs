@@ -45,11 +45,11 @@ public static class ConfigFactory
         foreach ((_, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
             object? value = info.GetValue(module, null);
             if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
-                ConfigGroup group = GetConfigGroup(configPageModel, attribute);
+                ConfigGroup group = GetConfigGroup(configPageModel, module, attribute);
                 ConfigItem item = new() {
                     Content = builder.Build(module, info),
-                    Description = attribute.Description,
-                    Header = attribute.Header
+                    Description = module.Translate(attribute.Description),
+                    Header = module.Translate(attribute.Header)
                 };
 
                 group.Items.Add(item);
@@ -81,15 +81,17 @@ public static class ConfigFactory
     /// <param name="configPageModel"></param>
     /// <param name="attribute"></param>
     /// <returns></returns>
-    private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, ConfigAttribute attribute)
+    private static ConfigGroup GetConfigGroup(ConfigPageModel configPageModel, IConfigModule module, ConfigAttribute attribute)
     {
-        ConfigCategory category = configPageModel.Categories.FirstOrDefault(
-            x => x.Header == attribute.Category) is ConfigCategory _category
-            ? _category : new(parent: configPageModel, attribute.Category);
+        ConfigCategory category = configPageModel.Categories
+            .FirstOrDefault(x => x.Id == attribute.Category) is ConfigCategory _category
+                ? _category
+                : new(parent: configPageModel, attribute.Category, module.Translate(attribute.Category));
 
-        ConfigGroup group = category.Groups.FirstOrDefault(
-            x => x.Header == attribute.Group) is ConfigGroup _group
-            ? _group : new(parent: category, attribute.Group);
+        ConfigGroup group = category.Groups
+            .FirstOrDefault(x => x.Id == attribute.Group) is ConfigGroup _group
+                ? _group
+                : new(parent: category, attribute.Group, module.Translate(attribute.Group));
 
         if (configPageModel.Categories.Count == 1 && configPageModel.Categories[0].Groups.Count == 1) {
             configPageModel.SelectedGroup = group;

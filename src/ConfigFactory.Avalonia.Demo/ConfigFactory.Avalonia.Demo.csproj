@@ -28,4 +28,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ConfigFactory.Avalonia\ConfigFactory.Avalonia.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Update="Assets\Translations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Translations.resx</DependentUpon>
+    </AvaloniaResource>
+  </ItemGroup>
 </Project>

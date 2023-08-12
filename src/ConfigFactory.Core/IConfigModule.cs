@@ -55,4 +55,11 @@ public interface IConfigModule
 
     /// <inheritdoc cref="Validate()"/>
     public bool Validate(out string? message, out ConfigProperty target);
+
+    /// <summary>
+    /// Translate the string.
+    /// </summary>
+    /// <param name="input">Input string (key)</param>
+    /// <returns>Translated string</returns>
+    public string Translate(string input);
 }

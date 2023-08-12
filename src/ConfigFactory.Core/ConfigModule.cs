@@ -132,4 +132,15 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         message = "Validation Successful";
         return true;
     }
+
+    /// <summary>
+    /// Default implementation of the <see cref="IConfigModule.Translate(string)"/>.
+    /// <br/>Returns the <paramref name="input"/> string.
+    /// </summary>
+    /// <param name="input">Input string (key)</param>
+    /// <returns>Translated string</returns>
+    public virtual string Translate(string input)
+    {
+        return input;
+    }
 }

@@ -6,6 +6,15 @@ namespace ConfigFactory.Models;
 
 public partial class ConfigGroup : ObservableObject
 {
+    /// <summary>
+    /// Intenal key
+    /// </summary>
+    [ObservableProperty]
+    private string _id;
+
+    /// <summary>
+    /// Displayed header
+    /// </summary>
     [ObservableProperty]
     private string _header;
 
@@ -15,8 +24,9 @@ public partial class ConfigGroup : ObservableObject
     [ObservableProperty]
     private ObservableCollection<ConfigItem> _items = new();
 
-    public ConfigGroup(string header)
+    public ConfigGroup(string id, string header)
     {
+        _id = id;
         _header = header;
     }
 
@@ -24,9 +34,11 @@ public partial class ConfigGroup : ObservableObject
     /// Custom constructor used in <see cref="ConfigFactory.GetConfigGroup(ConfigPageModel, Core.Attributes.ConfigAttribute)"/> as a helper extension
     /// </summary>
     /// <param name="parent"></param>
+    /// <param name="id"></param>
     /// <param name="header"></param>
-    internal ConfigGroup(ConfigCategory parent, string header)
+    internal ConfigGroup(ConfigCategory parent, string id, string header)
     {
+        _id = id;
         _header = header;
         parent.Groups.Add(this);
     }
