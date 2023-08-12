@@ -9,8 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\Translations.resx" />
-    <AvaloniaResource Remove="Assets\Translations.th-TH.resx" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
@@ -36,14 +34,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Translations.resx</DependentUpon>
     </AvaloniaResource>
-    <EmbeddedResource Update="Assets\Translations.th-TH.resx">
+    <AvaloniaResource Update="Assets\Translations.th-TH.resx">
       <Generator></Generator>
-    </EmbeddedResource>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Assets\Translations.resx">
+    <AvaloniaResource Update="Assets\Translations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Translations.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    </AvaloniaResource>
   </ItemGroup>
 </Project>
