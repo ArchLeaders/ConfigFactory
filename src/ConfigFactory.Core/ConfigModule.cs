@@ -135,7 +135,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     /// <summary>
     /// Default implementation of the <see cref="IConfigModule.Translate(string)"/>.
-    /// Returns the same same string.
+    /// <br/>Returns the <paramref name="input"/> string.
     /// </summary>
     /// <param name="input">Input string (key)</param>
     /// <returns>Translated string</returns>

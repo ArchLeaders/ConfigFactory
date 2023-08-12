@@ -85,9 +85,9 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
     /// </summary>
     public override string Translate(string input)
     {
-
-        if (string.IsNullOrWhiteSpace(input))
+        if (string.IsNullOrWhiteSpace(input)) {
             return input;
+        }
 
         return Translations.ResourceManager?.GetString(input, Translations.Culture) ?? input;
     }
