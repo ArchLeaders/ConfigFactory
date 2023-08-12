@@ -34,14 +34,5 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Translations.resx</DependentUpon>
     </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Translations.th-TH.resx">
-      <Generator></Generator>
-    </AvaloniaResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Update="Assets\Translations.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Translations.Designer.cs</LastGenOutput>
-    </AvaloniaResource>
   </ItemGroup>
 </Project>
