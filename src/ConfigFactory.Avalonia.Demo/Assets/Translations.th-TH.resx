@@ -129,6 +129,9 @@
   <data name="Dropdown Field" xml:space="preserve">
     <value>ช่องคำตอบ Dropdown</value>
   </data>
+  <data name="Dropdown Field 2" xml:space="preserve">
+    <value>ช่องคำตอบ Dropdown 2</value>
+  </data>
   <data name="Enum Field" xml:space="preserve">
     <value>ช่องคำตอบ Enum</value>
   </data>
@@ -140,6 +143,15 @@
   </data>
   <data name="Less Common" xml:space="preserve">
     <value>ผิดปกติ</value>
+  </data>
+  <data name="Option A" xml:space="preserve">
+    <value>ตัวเลือก A</value>
+  </data>
+  <data name="Option B" xml:space="preserve">
+    <value>ตัวเลือก B</value>
+  </data>
+  <data name="Option C" xml:space="preserve">
+    <value>ตัวเลือก C</value>
   </data>
   <data name="Other Field" xml:space="preserve">
     <value>กล่องคำตอบอื่น</value>

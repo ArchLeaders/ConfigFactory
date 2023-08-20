@@ -49,13 +49,7 @@ public class TextControlBuilder : ControlBuilder<TextControlBuilder>
             };
         }
         else if (propertyInfo.GetCustomAttribute<DropdownConfigAttribute>() is DropdownConfigAttribute dca) {
-            return new ComboBox {
-                DataContext = context,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                ItemsSource = dca.GetItemsSource(context),
-                VerticalAlignment = VerticalAlignment.Top,
-                [!SelectingItemsControl.SelectedItemProperty] = new Binding(propertyInfo.Name)
-            };
+            return DropdownBuilder.Build(context, propertyInfo, dca);
         }
 
         return new TextBox {

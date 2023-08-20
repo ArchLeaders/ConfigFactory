@@ -129,6 +129,9 @@
   <data name="Dropdown Field" xml:space="preserve">
     <value>Some Dropdown Field</value>
   </data>
+  <data name="Dropdown Field 2" xml:space="preserve">
+    <value>Some Dropdown Field 2</value>
+  </data>
   <data name="Enum Field" xml:space="preserve">
     <value>Some Other Field</value>
   </data>
@@ -140,6 +143,15 @@
   </data>
   <data name="Less Common" xml:space="preserve">
     <value>Less Common</value>
+  </data>
+  <data name="Option A" xml:space="preserve">
+    <value>Option A</value>
+  </data>
+  <data name="Option B" xml:space="preserve">
+    <value>Option B</value>
+  </data>
+  <data name="Option C" xml:space="preserve">
+    <value>Option C</value>
   </data>
   <data name="Other Field" xml:space="preserve">
     <value>Some Enum Field</value>

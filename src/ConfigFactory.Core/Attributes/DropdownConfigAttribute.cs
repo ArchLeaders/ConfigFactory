@@ -13,6 +13,21 @@ public class DropdownConfigAttribute : Attribute
     /// </summary>
     public string? RuntimeItemsSourceMethodName { get; set; }
 
+    /// <summary>
+    /// Display property name
+    /// </summary>
+    public string? DisplayMemberPath { get; set; }
+
+    /// <summary>
+    /// Value property name
+    /// </summary>
+    public string? SelectedValuePath { get; set; }
+
+    /// <summary>
+    /// Default selected item index
+    /// </summary>
+    public int? DefaultItemIndex { get; set; }
+
     public IEnumerable GetItemsSource(object? context)
     {
         if (RuntimeItemsSourceMethodName != null) {
