@@ -14,12 +14,30 @@ public class DropdownConfigAttribute : Attribute
     public string? RuntimeItemsSourceMethodName { get; set; }
 
     /// <summary>
-    /// Display property name
+    /// Display property name.<br/><br/>
+    /// <example>
+    /// For example, you want to use a list of <see cref="KeyValuePair{TKey, TValue}"/> as options for the dropdown,
+    /// where Key is the displayed string for an option.
+    /// <br/> Then set the folowing properties to:
+    /// <code>
+    ///     DisplayMemberPath = "Key"
+    ///     SelectedValuePath = "Value"
+    /// </code>
+    /// </example>
     /// </summary>
     public string? DisplayMemberPath { get; set; }
 
     /// <summary>
-    /// Value property name
+    /// Value property name.<br/><br/>
+    /// <example>
+    /// For example, you want to use a list of <see cref="KeyValuePair{TKey, TValue}"/> as options for the dropdown,
+    /// where Key is the displayed string for an option.
+    /// <br/> Then set the folowing properties to:
+    /// <code>
+    ///     DisplayMemberPath = "Key"
+    ///     SelectedValuePath = "Value"
+    /// </code>
+    /// </example>
     /// </summary>
     public string? SelectedValuePath { get; set; }
 
