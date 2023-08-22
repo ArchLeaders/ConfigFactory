@@ -16,8 +16,7 @@ public static class DropdownBuilder
 {
     public static ComboBox Build(IConfigModule context, PropertyInfo propertyInfo, DropdownConfigAttribute dca)
     {
-        ComboBox combobox = new()
-        {
+        ComboBox combobox = new() {
             DataContext = context,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             ItemsSource = dca.GetItemsSource(context),

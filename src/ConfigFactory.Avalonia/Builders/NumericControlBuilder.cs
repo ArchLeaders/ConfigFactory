@@ -17,8 +17,7 @@ public class NumericControlBuilder : ControlBuilder<NumericControlBuilder>
             return DropdownBuilder.Build(context, propertyInfo, dca);
         }
 
-        NumericUpDown control = new()
-        {
+        NumericUpDown control = new() {
             DataContext = context,
             VerticalAlignment = VerticalAlignment.Top,
             [!NumericUpDown.ValueProperty] = new Binding(propertyInfo.Name)

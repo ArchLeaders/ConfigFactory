@@ -113,8 +113,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
 
     public static ObservableCollection<KeyValuePair<string, string>> GetThings2(IConfigModule context)
     {
-        var options = (new KeyValuePair<string, string>[]
-        {
+        var options = (new KeyValuePair<string, string>[] {
             new("Option A", "A"),
             new("Option B", "B"),
             new("Option C", "C"),
@@ -125,8 +124,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
 
     public static ObservableCollection<KeyValuePair<string, int>> GetThings3(IConfigModule context)
     {
-        var options = (new KeyValuePair<string, int>[]
-        {
+        var options = (new KeyValuePair<string, int>[] {
             new("Slow", 10),
             new("Medium", 50),
             new("Fast", 100),
