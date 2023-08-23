@@ -102,7 +102,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         Group = "Less Common")]
     private BrowserMode _someEnumField = BrowserMode.SaveFile;
 
-    public static ObservableCollection<string> GetThings(IConfigModule context)
+    public static ObservableCollection<string> GetThings(IConfigModule _)
     {
         return new() {
             { "Entry One" },
