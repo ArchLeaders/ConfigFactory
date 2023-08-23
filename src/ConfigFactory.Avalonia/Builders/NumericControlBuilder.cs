@@ -13,8 +13,8 @@ public class NumericControlBuilder : ControlBuilder<NumericControlBuilder>
 {
     public override object? Build(IConfigModule context, PropertyInfo propertyInfo)
     {
-        if (propertyInfo.GetCustomAttribute<DropdownConfigAttribute>() is DropdownConfigAttribute dca) {
-            return DropdownBuilder.Build(context, propertyInfo, dca);
+        if (propertyInfo.GetCustomAttribute<DropdownConfigAttribute>() is DropdownConfigAttribute dropdownConfigAttribute) {
+            return DropdownBuilder.Build(context, propertyInfo, dropdownConfigAttribute);
         }
 
         NumericUpDown control = new() {
@@ -23,14 +23,14 @@ public class NumericControlBuilder : ControlBuilder<NumericControlBuilder>
             [!NumericUpDown.ValueProperty] = new Binding(propertyInfo.Name)
         };
 
-        if (propertyInfo.GetCustomAttribute<NumericConfigAttribute>() is NumericConfigAttribute nca) {
-            if (TryConvertToDecimal(nca.Minimum, out decimal min)) {
+        if (propertyInfo.GetCustomAttribute<NumericConfigAttribute>() is NumericConfigAttribute numericConfigAttribute) {
+            if (TryConvertToDecimal(numericConfigAttribute.Minimum, out decimal min)) {
                 control.Minimum = min;
             }
-            if (TryConvertToDecimal(nca.Maximum, out decimal max)) {
+            if (TryConvertToDecimal(numericConfigAttribute.Maximum, out decimal max)) {
                 control.Maximum = max;
             }
-            if (TryConvertToDecimal(nca.Increment, out decimal inc)) {
+            if (TryConvertToDecimal(numericConfigAttribute.Increment, out decimal inc)) {
                 control.Increment = inc;
             }
         }

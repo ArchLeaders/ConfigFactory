@@ -118,7 +118,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
             new("Option B", "B"),
             new("Option C", "C"),
         }).Select(x => new KeyValuePair<string, string>(context.Translate(x.Key), x.Value));
-        
+
         return new(options);
     }
 
