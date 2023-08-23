@@ -14,21 +14,21 @@ namespace ConfigFactory.Avalonia.Helpers;
 /// </summary>
 internal static class DropdownBuilder
 {
-    public static ComboBox Build(IConfigModule context, PropertyInfo propertyInfo, DropdownConfigAttribute dca)
+    public static ComboBox Build(IConfigModule context, PropertyInfo propertyInfo, DropdownConfigAttribute dropdownConfigAttribute)
     {
         ComboBox comboBox = new() {
             DataContext = context,
             HorizontalAlignment = HorizontalAlignment.Stretch,
-            ItemsSource = dca.GetItemsSource(context),
+            ItemsSource = dropdownConfigAttribute.GetItemsSource(context),
             VerticalAlignment = VerticalAlignment.Top,
         };
 
-        if (!string.IsNullOrWhiteSpace(dca.DisplayMemberPath)) {
-            comboBox.DisplayMemberBinding = new Binding(dca.DisplayMemberPath);
+        if (!string.IsNullOrWhiteSpace(dropdownConfigAttribute.DisplayMemberPath)) {
+            comboBox.DisplayMemberBinding = new Binding(dropdownConfigAttribute.DisplayMemberPath);
         }
 
-        if (!string.IsNullOrWhiteSpace(dca.SelectedValuePath)) {
-            comboBox.SelectedValueBinding = new Binding(dca.SelectedValuePath);
+        if (!string.IsNullOrWhiteSpace(dropdownConfigAttribute.SelectedValuePath)) {
+            comboBox.SelectedValueBinding = new Binding(dropdownConfigAttribute.SelectedValuePath);
             comboBox[!SelectingItemsControl.SelectedValueProperty] = new Binding(propertyInfo.Name, BindingMode.TwoWay);
         }
         else {
