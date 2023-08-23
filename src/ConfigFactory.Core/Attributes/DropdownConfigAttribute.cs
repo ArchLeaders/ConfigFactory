@@ -49,7 +49,7 @@ public class DropdownConfigAttribute : Attribute
     public IEnumerable GetItemsSource(object? context)
     {
         if (RuntimeItemsSourceMethodName != null) {
-            return context?.GetType().GetMethod(RuntimeItemsSourceMethodName)?.Invoke(context, new object[] { context }) as IEnumerable ?? ItemsSource;
+            return context?.GetType().GetMethod(RuntimeItemsSourceMethodName)?.Invoke(context, null) as IEnumerable ?? ItemsSource;
         }
 
         return ItemsSource;

@@ -102,7 +102,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         Group = "Less Common")]
     private BrowserMode _someEnumField = BrowserMode.SaveFile;
 
-    public static ObservableCollection<string> GetThings(IConfigModule _)
+    public static ObservableCollection<string> GetThings()
     {
         return new() {
             { "Entry One" },
@@ -111,24 +111,24 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
         };
     }
 
-    public static ObservableCollection<KeyValuePair<string, string>> GetThings2(IConfigModule context)
+    public ObservableCollection<KeyValuePair<string, string>> GetThings2()
     {
         var options = (new KeyValuePair<string, string>[] {
             new("Option A", "A"),
             new("Option B", "B"),
             new("Option C", "C"),
-        }).Select(x => new KeyValuePair<string, string>(context.Translate(x.Key), x.Value));
+        }).Select(x => new KeyValuePair<string, string>(Translate(x.Key), x.Value));
 
         return new(options);
     }
 
-    public static ObservableCollection<KeyValuePair<string, int>> GetThings3(IConfigModule context)
+    public ObservableCollection<KeyValuePair<string, int>> GetThings3()
     {
         var options = (new KeyValuePair<string, int>[] {
             new("Slow", 10),
             new("Medium", 50),
             new("Fast", 100),
-        }).Select(x => new KeyValuePair<string, int>(context.Translate(x.Key), x.Value));
+        }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
 
         return new(options);
     }
