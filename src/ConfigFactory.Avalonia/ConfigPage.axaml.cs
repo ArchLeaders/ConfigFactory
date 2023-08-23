@@ -9,6 +9,7 @@ public partial class ConfigPage : UserControl
         BooleanControlBuilder.Shared.Register();
         TextControlBuilder.Shared.Register();
         EnumControlBuilder.Shared.Register();
+        NumericControlBuilder.Shared.Register();
     }
 
     public ConfigPage()

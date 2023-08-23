@@ -126,8 +126,26 @@
   <data name="Common" xml:space="preserve">
     <value>Common</value>
   </data>
+  <data name="Dropdown" xml:space="preserve">
+    <value>Dropdown</value>
+  </data>
+  <data name="Dropdown Description 1" xml:space="preserve">
+    <value>The value of the string field equals to the selected option text</value>
+  </data>
+  <data name="Dropdown Description 2" xml:space="preserve">
+    <value>The value of the string field equals to the value of the selected KeyValuePair: Option A (A), Option B (B), Option C (C)</value>
+  </data>
+  <data name="Dropdown Description 3" xml:space="preserve">
+    <value>The value of the integer field equals to the value of the selected KeyValuePair: Slow (10), Medium (50), Fast (100)</value>
+  </data>
   <data name="Dropdown Field" xml:space="preserve">
     <value>Some Dropdown Field</value>
+  </data>
+  <data name="Dropdown Field 2" xml:space="preserve">
+    <value>Some Dropdown Field 2</value>
+  </data>
+  <data name="Dropdown Field 3" xml:space="preserve">
+    <value>Some Dropdown Field 3</value>
   </data>
   <data name="Enum Field" xml:space="preserve">
     <value>Some Other Field</value>
@@ -135,14 +153,35 @@
   <data name="Example Description" xml:space="preserve">
     <value>Extended (probably redundant) description of Some Field, a text-based configuration</value>
   </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="Integer Field" xml:space="preserve">
+    <value>Integer Field</value>
   </data>
   <data name="Less Common" xml:space="preserve">
     <value>Less Common</value>
   </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Option A" xml:space="preserve">
+    <value>Option A</value>
+  </data>
+  <data name="Option B" xml:space="preserve">
+    <value>Option B</value>
+  </data>
+  <data name="Option C" xml:space="preserve">
+    <value>Option C</value>
+  </data>
   <data name="Other Field" xml:space="preserve">
     <value>Some Enum Field</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>Slow</value>
   </data>
   <data name="Text Field" xml:space="preserve">
     <value>Some Text Field</value>

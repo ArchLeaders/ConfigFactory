@@ -126,8 +126,23 @@
   <data name="Common" xml:space="preserve">
     <value>ทั่วไป</value>
   </data>
+  <data name="Dropdown" xml:space="preserve">
+    <value>หมวด Dropdown</value>
+  </data>
+  <data name="Dropdown Description 1" xml:space="preserve">
+    <value>ค่าช่องคำตอบ String เท่ากับรายการที่เลือกข้อความ</value>
+  </data>
+  <data name="Dropdown Description 2" xml:space="preserve">
+    <value>ค่าช่องคำตอบ String เท่ากับรายการ KeyValuePair: ตัวเลือก A (A), ตัวเลือก B (B), ตัวเลือก C (C)</value>
+  </data>
+  <data name="Dropdown Description 3" xml:space="preserve">
+    <value>ค่าช่องคำตอบ Integer เท่ากับรายการ KeyValuePair: ช้า (10), ปานกลาง (50), เร็ว (100)</value>
+  </data>
   <data name="Dropdown Field" xml:space="preserve">
     <value>ช่องคำตอบ Dropdown</value>
+  </data>
+  <data name="Dropdown Field 2" xml:space="preserve">
+    <value>ช่องคำตอบ Dropdown 2</value>
   </data>
   <data name="Enum Field" xml:space="preserve">
     <value>ช่องคำตอบ Enum</value>
@@ -135,14 +150,35 @@
   <data name="Example Description" xml:space="preserve">
     <value>คำอธิบายของกล่องคำตอบ</value>
   </data>
+  <data name="Fast" xml:space="preserve">
+    <value>เร็ว</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>หลัก</value>
+  </data>
+  <data name="Integer Field" xml:space="preserve">
+    <value>ช่องคำตอบ Integer</value>
   </data>
   <data name="Less Common" xml:space="preserve">
     <value>ผิดปกติ</value>
   </data>
+  <data name="Medium" xml:space="preserve">
+    <value>ปานกลาง</value>
+  </data>
+  <data name="Option A" xml:space="preserve">
+    <value>ตัวเลือก A</value>
+  </data>
+  <data name="Option B" xml:space="preserve">
+    <value>ตัวเลือก B</value>
+  </data>
+  <data name="Option C" xml:space="preserve">
+    <value>ตัวเลือก C</value>
+  </data>
   <data name="Other Field" xml:space="preserve">
     <value>กล่องคำตอบอื่น</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>ช้า</value>
   </data>
   <data name="Text Field" xml:space="preserve">
     <value>ช่องคำตอบ Text</value>
