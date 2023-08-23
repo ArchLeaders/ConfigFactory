@@ -44,7 +44,7 @@ public static class ConfigFactory
 
         foreach ((_, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
             object? value = info.GetValue(module, null);
-            if (_builders.FirstOrDefault(x => x.IsValid(value)) is IControlBuilder builder) {
+            if (_builders.FirstOrDefault(x => x.IsValid(info.PropertyType)) is IControlBuilder builder) {
                 ConfigGroup group = GetConfigGroup(configPageModel, module, attribute);
                 ConfigItem item = new() {
                     Content = builder.Build(module, info),

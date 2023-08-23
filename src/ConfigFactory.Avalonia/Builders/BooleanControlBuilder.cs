@@ -22,8 +22,8 @@ public class BooleanControlBuilder : ControlBuilder<BooleanControlBuilder>
         };
     }
 
-    public override bool IsValid(object? value)
+    public override bool IsValid(Type type)
     {
-        return value is bool;
+        return type == typeof(bool);
     }
 }

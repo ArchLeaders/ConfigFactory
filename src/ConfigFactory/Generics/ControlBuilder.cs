@@ -8,5 +8,5 @@ public abstract class ControlBuilder<T> : IControlBuilder where T : ControlBuild
     public static T Shared { get; } = new();
 
     public abstract object? Build(IConfigModule context, PropertyInfo propertyInfo);
-    public abstract bool IsValid(object? value);
+    public abstract bool IsValid(Type type);
 }

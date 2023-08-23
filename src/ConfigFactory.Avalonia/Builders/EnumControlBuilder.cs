@@ -20,8 +20,8 @@ public class EnumControlBuilder : ControlBuilder<EnumControlBuilder>
         };
     }
 
-    public override bool IsValid(object? value)
+    public override bool IsValid(Type type)
     {
-        return value is Enum;
+        return type.IsEnum;
     }
 }

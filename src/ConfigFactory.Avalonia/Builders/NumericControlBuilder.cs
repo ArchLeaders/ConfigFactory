@@ -38,19 +38,10 @@ public class NumericControlBuilder : ControlBuilder<NumericControlBuilder>
         return control;
     }
 
-    public override bool IsValid(object? value)
+    public override bool IsValid(Type type)
     {
-        return value is sbyte
-            || value is byte
-            || value is short
-            || value is ushort
-            || value is int
-            || value is uint
-            || value is long
-            || value is ulong
-            || value is float
-            || value is double
-            || value is decimal;
+        return type.IsPrimitive &&
+            type != typeof(bool) || type != typeof(char);
     }
 
     private static bool TryConvertToDecimal(object? value, out decimal result)

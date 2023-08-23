@@ -19,5 +19,5 @@ public interface IControlBuilder
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public bool IsValid(object? value);
+    public bool IsValid(Type type);
 }
