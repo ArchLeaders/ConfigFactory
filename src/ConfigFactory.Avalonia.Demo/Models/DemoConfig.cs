@@ -2,9 +2,7 @@
 using ConfigFactory.Avalonia.Demo.Assets;
 using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace ConfigFactory.Avalonia.Demo.Models;
 
@@ -135,7 +133,7 @@ public partial class DemoConfig : ConfigModule<DemoConfig>
 
     partial void OnBoolFieldChanged(bool value)
     {
-        SetValidation(() => BoolField, value => {
+        Validate(() => BoolField, value => {
             return value is true;
         });
     }

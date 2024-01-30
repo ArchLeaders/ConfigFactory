@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ConfigFactory.Avalonia.Demo.ViewModels;
 using ConfigFactory.Avalonia.Demo.Views;
 using ConfigFactory.Avalonia.Helpers;
 using System.Globalization;
@@ -20,9 +19,7 @@ public partial class App : Application
             // Change locale here (e.g. th-TH)
             Assets.Translations.Culture = new CultureInfo("en-US");
 
-            desktop.MainWindow = new MainWindow {
-                DataContext = new MainWindowViewModel(),
-            };
+            desktop.MainWindow = new MainWindow();
 
             BrowserDialog.StorageProvider = desktop.MainWindow.StorageProvider;
         }

@@ -63,9 +63,10 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         using FileStream fs = File.OpenRead(config.LocalPath);
         config = JsonSerializer.Deserialize<T>(fs)!;
 
-        object?[] parameters = { null };
-        foreach ((var name, _) in config.Properties) {
-            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, parameters);
+        foreach ((var name, (var property, _)) in config.Properties) {
+            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, new object?[] {
+                property.GetValue(config)
+            });
         }
 
         return config;
@@ -79,7 +80,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         }
     }
 
-    protected virtual void SetValidation<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
+    protected virtual void Validate<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
         string? invalidErrorMessage = null, string? validationFailureColor = null, string? validationSuccessColor = null)
     {
         PropertyInfo propertyInfo = (PropertyInfo)((MemberExpression)property.Body).Member;

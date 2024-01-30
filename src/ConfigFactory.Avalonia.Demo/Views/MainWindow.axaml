@@ -4,7 +4,6 @@
         xmlns:controls="clr-namespace:ConfigFactory.Avalonia;assembly=ConfigFactory.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:ConfigFactory.Avalonia.Demo.ViewModels"
         Title="ConfigFactory.Avalonia.Demo"
         Width="650"
         Height="350"
@@ -13,29 +12,5 @@
         Background="{DynamicResource SystemChromeLowColor}"
         Icon="/Assets/avalonia-logo.ico"
         mc:Ignorable="d">
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
-
-    <!--<StackPanel>
-        <controls:ConfigItem Margin="6,6,6,0"
-                             Description="Shows a new config factory page"
-                             Header="Config Factory"
-                             ValidationBrush="#00CC1C">
-            <Button HorizontalAlignment="Right" Content="Open Config Page" />
-        </controls:ConfigItem>
-
-        <controls:ConfigItem Margin="6,0,6,6"
-                             Description="Simple, disabled configuration item"
-                             Header="Disabled">
-            <ToggleSwitch HorizontalAlignment="Right"
-                          VerticalAlignment="Top"
-                          IsChecked="{Binding $parent[controls:ConfigItem].IsEnabled}"
-                          OffContent=""
-                          OnContent="" />
-        </controls:ConfigItem>
-    </StackPanel>-->
-
     <controls:ConfigPage Name="ConfigPage" />
 </Window>
