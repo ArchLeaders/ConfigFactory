@@ -3,20 +3,14 @@ using System.Reflection;
 
 namespace ConfigFactory.Core.Models;
 
-public readonly struct ConfigProperty
+public class ConfigProperty(PropertyInfo property, ConfigAttribute attribute)
 {
-    public PropertyInfo Property { get; }
-    public ConfigAttribute Attribute { get; }
+    public PropertyInfo Property { get; } = property;
+    public ConfigAttribute Attribute { get; } = attribute;
 
     public void Deconstruct(out PropertyInfo property, out ConfigAttribute attribute)
     {
         property = Property;
         attribute = Attribute;
-    }
-
-    public ConfigProperty(PropertyInfo property, ConfigAttribute attribute)
-    {
-        Property = property;
-        Attribute = attribute;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -10,15 +11,17 @@ namespace ConfigFactory.Core;
 
 public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T : ConfigModule<T>, new()
 {
+    private static readonly Lazy<T> _shared = new(() => {
+        T module = new();
+        module.Load(ref module);
+        return module;
+    });
+
     protected virtual string SuccessColor { get; } = "#FF31C059";
     protected virtual string FailureColor { get; } = "#FFE64032";
 
-    IConfigModule IConfigModule.Shared {
-        get => Shared;
-        set => Shared = (T)value;
-    }
-
-    public static T Shared { get; set; } = DefaultLoad();
+    IConfigModule IConfigModule.Shared => Shared;
+    public static T Shared { get; set; } = _shared.Value;
 
     [JsonIgnore]
     public IValidationInterface? ValidationInterface { get; set; }
@@ -38,46 +41,82 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     public virtual string LocalPath { get; }
 
     [JsonIgnore]
-    public ConfigProperties Properties { get; }
+    public ConfigPropertyCollection Properties { get; }
 
     [JsonIgnore]
-    public Dictionary<string, (Func<object?, bool>, string?)> Validators { get; } = new();
+    public ConfigValidatorCollection Validators { get; } = [];
+
+    /// <summary>
+    /// Executed before saving; return <see langword="false"/> to stop saving
+    /// </summary>
+    public event Func<bool> OnSaving = () => true;
+
+    /// <summary>
+    /// Executed after saving
+    /// </summary>
+    public event Action OnSave = () => { };
 
     public ConfigModule()
     {
         Name = typeof(T).Name;
         LocalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Name, "Config.json");
-        Properties = ConfigProperties.Generate<T>();
+        Properties = ConfigPropertyCollection.Generate<T>();
     }
 
-    public virtual IConfigModule Load() => DefaultLoad();
-    private static T DefaultLoad()
+    protected virtual void Load(ref T module)
     {
-        T config = new();
-
-        if (!File.Exists(config.LocalPath)) {
-            config.Save();
-            return config;
+        if (!File.Exists(module.LocalPath)) {
+            module.Save();
+            return;
         }
 
-        using FileStream fs = File.OpenRead(config.LocalPath);
-        config = JsonSerializer.Deserialize<T>(fs)!;
+        using FileStream fs = File.OpenRead(module.LocalPath);
+        module = JsonSerializer.Deserialize<T>(fs)!;
 
-        foreach (var (name, (property, _)) in config.Properties) {
-            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, new[] {
-                property.GetValue(config)
-            });
+        foreach (var (name, (property, _)) in module.Properties) {
+            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?
+                .Invoke(module, [property.GetValue(module)]);
         }
-
-        return config;
     }
 
     public virtual void Reset()
     {
-        IConfigModule config = Load();
+        T config = new();
+        Load(ref config);
+
         foreach (var (name, (property, _)) in Properties) {
             property.SetValue(Shared, config.Properties[name].Property.GetValue(config));
         }
+    }
+
+    public virtual void Save()
+    {
+        if (OnSaving()) {
+            Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
+            using FileStream fs = File.Create(LocalPath);
+            JsonSerializer.Serialize(fs, (T)this);
+            OnSave();
+        }
+    }
+
+    public virtual bool Validate(out string? message, [MaybeNullWhen(true)] out ConfigProperty target)
+    {
+        foreach (var (name, (validate, errorMessage)) in Validators) {
+            target = Properties[name];
+            PropertyInfo propertyInfo = target.Property;
+            if (validate(propertyInfo.GetValue(this)) is bool isValid) {
+                ValidationInterface?.SetValidationColor(propertyInfo, isValid ? SuccessColor : FailureColor);
+
+                if (!isValid) {
+                    message = errorMessage;
+                    return false;
+                }
+            }
+        }
+
+        target = default;
+        message = "Validation Successful";
+        return true;
     }
 
     protected virtual void Validate<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
@@ -93,51 +132,11 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     }
 
     /// <summary>
-    /// Executed before saving; return <see langword="false"/> to stop saving
-    /// </summary>
-    public event Func<bool> OnSaving = () => true;
-
-    /// <summary>
-    /// Executed after saving
-    /// </summary>
-    public event Action OnSave = () => { };
-
-    public virtual void Save()
-    {
-        if (OnSaving()) {
-            Directory.CreateDirectory(Path.GetDirectoryName(LocalPath)!);
-            using FileStream fs = File.Create(LocalPath);
-            JsonSerializer.Serialize(fs, (T)this);
-            OnSave();
-        }
-    }
-
-    public virtual bool Validate(out string? message, out ConfigProperty target)
-    {
-        foreach (var (name, (validate, errorMessage)) in Validators) {
-            target = Properties[name];
-            PropertyInfo propertyInfo = target.Property;
-            if (validate(propertyInfo.GetValue(this)) is bool isValid) {
-                ValidationInterface?.SetValidationColor(propertyInfo, isValid ? SuccessColor : FailureColor);
-
-                if (!isValid) {
-                    message = errorMessage;
-                    return false;
-                }
-            }
-        }
-
-        target = new();
-        message = "Validation Successful";
-        return true;
-    }
-
-    /// <summary>
     /// Default implementation of the <see cref="IConfigModule.Translate(string)"/>.
     /// <br/>Returns the <paramref name="input"/> string.
     /// </summary>
     /// <param name="input">Input string (key)</param>
-    /// <returns>Translated string</returns>
+    /// <returns><paramref name="input"/></returns>
     public virtual string Translate(string input)
     {
         return input;

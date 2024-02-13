@@ -1,5 +1,6 @@
 ﻿using ConfigFactory.Core.Components;
 using ConfigFactory.Core.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ConfigFactory.Core;
 
@@ -8,39 +9,33 @@ namespace ConfigFactory.Core;
 /// </summary>
 public interface IConfigModule
 {
+    IConfigModule Shared { get; }
+
     /// <summary>
     /// <see cref="IValidationInterface"/> set by the frontend implementation
     /// </summary>
-    public IValidationInterface? ValidationInterface { get; set; }
+    IValidationInterface? ValidationInterface { get; set; }
 
     /// <summary>
     /// Gets or sets the dictionary of property validators
     /// </summary>
-    public Dictionary<string, (Func<object?, bool>, string?)> Validators { get; }
-
-    public IConfigModule Shared { get; set; }
+    ConfigValidatorCollection Validators { get; }
 
     /// <summary>
     /// Cached runtime reflected properties used by the UI builder
     /// </summary>
-    public ConfigProperties Properties { get; }
-
-    /// <summary>
-    /// Reads the <see cref="IConfigModule"/> from the saved location and returns the result
-    /// </summary>
-    /// <returns></returns>
-    public IConfigModule Load();
-
+    ConfigPropertyCollection Properties { get; }
+        
     /// <summary>
     /// Resets the <see cref="Properties"/> to their last saved values
     /// </summary>
     /// <returns></returns>
-    public void Reset();
+    void Reset();
 
     /// <summary>
     /// Saves the current <see cref="IConfigModule"/> instance
     /// </summary>
-    public void Save();
+    void Save();
 
     /// <summary>
     /// Validates each property registered in the <see cref="Validators"/> collection
@@ -48,18 +43,18 @@ public interface IConfigModule
     /// <returns>
     /// <see langword="true"/> if the validation was successful; <see langword="false"/> if the validation failed
     /// </returns>
-    public virtual bool Validate() => Validate(out _, out _);
+    virtual bool Validate() => Validate(out _, out _);
 
     /// <inheritdoc cref="Validate()"/>
-    public virtual bool Validate(out string? message) => Validate(out message, out _);
+    virtual bool Validate(out string? message) => Validate(out message, out _);
 
     /// <inheritdoc cref="Validate()"/>
-    public bool Validate(out string? message, out ConfigProperty target);
+    bool Validate(out string? message, [MaybeNullWhen(true)] out ConfigProperty target);
 
     /// <summary>
     /// Translate the string.
     /// </summary>
     /// <param name="input">Input string (key)</param>
     /// <returns>Translated string</returns>
-    public string Translate(string input);
+    string Translate(string input);
 }
