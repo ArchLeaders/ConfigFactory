@@ -74,7 +74,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     public virtual void Reset()
     {
-        var config = Load();
+        IConfigModule config = Load();
         foreach (var (name, (property, _)) in Properties) {
             property.SetValue(Shared, config.Properties[name].Property.GetValue(config));
         }
