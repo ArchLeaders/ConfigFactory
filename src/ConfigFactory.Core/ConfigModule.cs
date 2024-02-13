@@ -83,7 +83,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     protected virtual void Validate<TProperty>(Expression<Func<TProperty>> property, Func<TProperty?, bool> validation,
         string? invalidErrorMessage = null, string? validationFailureColor = null, string? validationSuccessColor = null)
     {
-        var propertyInfo = (PropertyInfo)((MemberExpression)property.Body).Member;
+        PropertyInfo propertyInfo = (PropertyInfo)((MemberExpression)property.Body).Member;
 
         Validators.TryAdd(propertyInfo.Name,
             (x => validation((TProperty?)x), invalidErrorMessage));
