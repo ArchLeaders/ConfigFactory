@@ -18,7 +18,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         set => Shared = (T)value;
     }
 
-    public static T Shared { get; set; } = Load();
+    public static T Shared { get; set; } = DefaultLoad();
 
     [JsonIgnore]
     public IValidationInterface? ValidationInterface { get; set; }
@@ -50,8 +50,8 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         Properties = ConfigProperties.Generate<T>();
     }
 
-    IConfigModule IConfigModule.Load() => Load();
-    private static T Load()
+    public virtual IConfigModule Load() => DefaultLoad();
+    private static T DefaultLoad()
     {
         T config = new();
 
@@ -63,8 +63,8 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         using FileStream fs = File.OpenRead(config.LocalPath);
         config = JsonSerializer.Deserialize<T>(fs)!;
 
-        foreach ((var name, (var property, _)) in config.Properties) {
-            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, new object?[] {
+        foreach (var (name, (property, _)) in config.Properties) {
+            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(config, new[] {
                 property.GetValue(config)
             });
         }
@@ -75,7 +75,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     public virtual void Reset()
     {
         IConfigModule config = Load();
-        foreach ((var name, (var property, _)) in Properties) {
+        foreach (var (name, (property, _)) in Properties) {
             property.SetValue(Shared, config.Properties[name].Property.GetValue(config));
         }
     }
@@ -112,11 +112,9 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         }
     }
 
-    public virtual bool Validate() => Validate(out _, out _);
-    public virtual bool Validate(out string? message) => Validate(out message, out _);
     public virtual bool Validate(out string? message, out ConfigProperty target)
     {
-        foreach ((var name, (var validate, var errorMessage)) in Validators) {
+        foreach (var (name, (validate, errorMessage)) in Validators) {
             target = Properties[name];
             PropertyInfo propertyInfo = target.Property;
             if (validate(propertyInfo.GetValue(this)) is bool isValid) {
