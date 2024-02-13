@@ -66,6 +66,7 @@
                         Margin="5,0"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
+                        Command="{Binding SecondaryRelayCommand}"
                         Content="{Binding SecondaryButtonContent}"
                         IsEnabled="{Binding SecondaryButtonIsEnabled}" />
                 <Button Name="PART_PrimaryButton"

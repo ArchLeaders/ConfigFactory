@@ -48,10 +48,10 @@ public interface IConfigModule
     /// <returns>
     /// <see langword="true"/> if the validation was successful; <see langword="false"/> if the validation failed
     /// </returns>
-    public virtual bool Validate() => Validate(out _, out _);
+    public bool Validate() => Validate(out _, out _);
 
     /// <inheritdoc cref="Validate()"/>
-    public virtual bool Validate(out string? message) => Validate(out message, out _);
+    public bool Validate(out string? message) => Validate(out message, out _);
 
     /// <inheritdoc cref="Validate()"/>
     public bool Validate(out string? message, out ConfigProperty target);
