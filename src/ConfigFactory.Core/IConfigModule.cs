@@ -51,7 +51,7 @@ public interface IConfigModule
     public bool Validate() => Validate(out _, out _);
 
     /// <inheritdoc cref="Validate()"/>
-    public bool Validate(out string? message) => Validate(out message, out _);
+    public virtual bool Validate(out string? message) => Validate(out message, out _);
 
     /// <inheritdoc cref="Validate()"/>
     public bool Validate(out string? message, out ConfigProperty target);
