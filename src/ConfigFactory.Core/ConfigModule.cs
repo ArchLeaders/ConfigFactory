@@ -116,7 +116,7 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
     {
         foreach (var (name, (validate, errorMessage)) in Validators) {
             target = Properties[name];
-            var propertyInfo = target.Property;
+            PropertyInfo propertyInfo = target.Property;
             if (validate(propertyInfo.GetValue(this)) is bool isValid) {
                 ValidationInterface?.SetValidationColor(propertyInfo, isValid ? SuccessColor : FailureColor);
 
