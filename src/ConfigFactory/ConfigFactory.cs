@@ -37,14 +37,21 @@ public static class ConfigFactory
     /// <inheritdoc cref="Append{T}(ConfigPageModel)"/>
     public static ConfigPageModel Append(this ConfigPageModel configPageModel, IConfigModule module)
     {
+        //Initialize Save handler
         configPageModel.PrimaryButtonEvent += () => {
             module.Save();
+            return Task.CompletedTask;
+        };
+        //Initialize Cancel handler
+        configPageModel.SecondaryButtonEvent += () =>
+        {
+            module.Reset();
             return Task.CompletedTask;
         };
 
         foreach ((_, (PropertyInfo info, ConfigAttribute attribute)) in module.Properties) {
             object? value = info.GetValue(module, null);
-            if (_builders.FirstOrDefault(x => x.IsValid(info.PropertyType)) is IControlBuilder builder) {
+            if (_builders.FirstOrDefault(x => x.IsValid(info.PropertyType)) is not null) {
                 ConfigGroup group = GetConfigGroup(configPageModel, module, attribute);
                 ConfigItem item = new() {
                     Content = builder.Build(module, info),
