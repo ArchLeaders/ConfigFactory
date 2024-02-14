@@ -63,7 +63,15 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
         Properties = ConfigPropertyCollection.Generate<T>();
     }
 
-    protected virtual void Load(ref T module)
+    void IConfigModule.Load(ref IConfigModule module)
+    {
+        if (module is T explcitModule) {
+            Load(ref explcitModule);
+            module = explcitModule;
+        }
+    }
+
+    public virtual void Load(ref T module)
     {
         if (!File.Exists(module.LocalPath)) {
             module.Save();

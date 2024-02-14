@@ -25,6 +25,12 @@ public interface IConfigModule
     /// Cached runtime reflected properties used by the UI builder
     /// </summary>
     ConfigPropertyCollection Properties { get; }
+
+    /// <summary>
+    /// Reads the <see cref="IConfigModule"/> from the saved location and returns the result
+    /// </summary>
+    /// <returns></returns>
+    void Load(ref IConfigModule module);
         
     /// <summary>
     /// Resets the <see cref="Properties"/> to their last saved values
