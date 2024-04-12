@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.5" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.7" />
   </ItemGroup>
 
 </Project>
