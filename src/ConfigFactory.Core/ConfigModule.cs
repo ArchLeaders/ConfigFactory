@@ -73,13 +73,10 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
 
     public virtual void Load(ref T module)
     {
-        if (!File.Exists(module.LocalPath)) {
-            module.Save();
-            return;
+        if (File.Exists(module.LocalPath)) {
+            using FileStream fs = File.OpenRead(module.LocalPath);
+            module = JsonSerializer.Deserialize<T>(fs)!;
         }
-
-        using FileStream fs = File.OpenRead(module.LocalPath);
-        module = JsonSerializer.Deserialize<T>(fs)!;
 
         foreach (var (name, (property, _)) in module.Properties) {
             typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?
