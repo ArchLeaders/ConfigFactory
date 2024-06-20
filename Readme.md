@@ -187,10 +187,9 @@ public class SomeObjectControlBuilder : ControlBuilder<SomeObjectControlBuilder>
 Add the style to app.axaml.
 
 ```
-    <Application.Styles>
-        <FluentTheme />
-        <StyleInclude Source="avares://ConfigFactory.Avalonia/Themes/Fluent/ConfigFactory.Avalonia.axaml" />
-    </Application.Styles>
+<Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://ConfigFactory.Avalonia/Themes/Fluent/ConfigFactory.Avalonia.axaml" /></Application.Styles>
 ```
 # Avalonia Demo 
 
