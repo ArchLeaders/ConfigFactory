@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using ConfigFactory.Core;
+using ConfigFactory.Core.Attributes;
 
 namespace ConfigFactory.Models;
 
 public partial class ConfigGroup : ObservableObject
 {
     /// <summary>
-    /// Intenal key
+    /// Internal key
     /// </summary>
     [ObservableProperty]
     private string _id;
@@ -31,7 +33,7 @@ public partial class ConfigGroup : ObservableObject
     }
 
     /// <summary>
-    /// Custom constructor used in <see cref="ConfigFactory.GetConfigGroup(ConfigPageModel, Core.Attributes.ConfigAttribute)"/> as a helper extension
+    /// Custom constructor used in <see cref="ConfigFactory.GetConfigGroup(ConfigPageModel,IConfigModule,ConfigAttribute)"/> as a helper extension
     /// </summary>
     /// <param name="parent"></param>
     /// <param name="id"></param>

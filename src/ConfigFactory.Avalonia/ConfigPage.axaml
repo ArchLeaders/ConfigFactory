@@ -87,9 +87,7 @@
         </Grid>
 
         <Grid Name="PART_FocusDelegate_2" Grid.Column="1">
-            <ScrollViewer x:CompileBindings="True"
-                          x:DataType="models:ConfigGroup"
-                          DataContext="{Binding SelectedGroup}"
+            <ScrollViewer DataContext="{Binding SelectedGroup}"
                           VerticalScrollBarVisibility="Auto">
                 <ContentControl Width="{Binding $parent.Bounds.Width}"
                                 MaxWidth="1200"

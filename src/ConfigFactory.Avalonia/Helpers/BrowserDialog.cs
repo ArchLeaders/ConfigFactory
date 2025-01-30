@@ -8,13 +8,16 @@ public sealed class BrowserDialog
     public static IStorageProvider? StorageProvider { get; set; }
 
     private static Dictionary<string, BrowseHistory> Stashed { get; set; } = new();
+
     private record BrowseHistory()
     {
-        public IStorageFolder? OpenDirectory { get; set; } = null;
-        public IStorageFolder? SaveDirectory { get; set; } = null;
+        public IStorageFolder? OpenDirectory { get; set; }
+
+        public IStorageFolder? SaveDirectory { get; set; }
     }
 
     public static IStorageFolder? LastOpenDirectory { get; set; }
+
     public static IStorageFolder? LastSaveDirectory { get; set; }
 
     private readonly BrowserMode _mode;
@@ -29,6 +32,7 @@ public sealed class BrowserDialog
     /// <param name="mode"></param>
     /// <param name="title"></param>
     /// <param name="filter">Semicolon delimited list of file filters. (Syntax: <c>Yaml Files<see cref="char">:</see>*.yml<see cref="char">;</see>*.yaml<see cref="char">|</see>All Files<see cref="char">:</see>*.*</c>)</param>
+    /// <param name="suggestedFileName"></param>
     /// <param name="instanceBrowserKey">Saves the last open/save directory as an instance mapped to the specified key</param>
     public BrowserDialog(BrowserMode mode, string? title = null, string? filter = null, string? suggestedFileName = null, string? instanceBrowserKey = null)
     {
@@ -40,7 +44,7 @@ public sealed class BrowserDialog
 
         if (instanceBrowserKey != null) {
             if (!Stashed.ContainsKey(instanceBrowserKey)) {
-                Stashed.Add(instanceBrowserKey, new());
+                Stashed.Add(instanceBrowserKey, new BrowseHistory());
             }
         }
     }
@@ -87,22 +91,20 @@ public sealed class BrowserDialog
             _ => throw new NotImplementedException()
         };
 
-        if (result is IReadOnlyList<IStorageFolder> folders && folders.Count > 0) {
-            SetLastDirectory(folders[folders.Count - 1]);
-            return folders.Select(folder => folder.Path.LocalPath);
-        }
-        else if (result is IReadOnlyList<IStorageFile> files && files.Count > 0) {
-            SetLastDirectory(await files[files.Count - 1].GetParentAsync());
-            return files.Select(file => file.Path.LocalPath);
-        }
-        else if (result is IStorageFile file) {
-            SetLastDirectory(await file.GetParentAsync());
-            return new string[1] {
-                file.Path.LocalPath
-            };
-        }
-        else {
-            return null;
+        switch (result) {
+            case IReadOnlyList<IStorageFolder> { Count: > 0 } folders:
+                SetLastDirectory(folders[^1]);
+                return folders.Select(folder => folder.Path.LocalPath);
+            case IReadOnlyList<IStorageFile> { Count: > 0 } files:
+                SetLastDirectory(await files[^1].GetParentAsync());
+                return files.Select(file => file.Path.LocalPath);
+            case IStorageFile file:
+                SetLastDirectory(await file.GetParentAsync());
+                return new string[1] {
+                    file.Path.LocalPath
+                };
+            default:
+                return null;
         }
     }
 
@@ -125,21 +127,14 @@ public sealed class BrowserDialog
     private IStorageFolder? GetLastDirectory()
     {
         if (_mode == BrowserMode.SaveFile) {
-            if (_instanceBrowserKey != null) {
-                return Stashed[_instanceBrowserKey].SaveDirectory;
-            }
-            else {
-                return LastSaveDirectory;
-            }
+            return _instanceBrowserKey is not null
+                ? Stashed[_instanceBrowserKey].SaveDirectory
+                : LastSaveDirectory;
         }
-        else {
-            if (_instanceBrowserKey != null) {
-                return Stashed[_instanceBrowserKey].OpenDirectory;
-            }
-            else {
-                return LastOpenDirectory;
-            }
-        }
+
+        return _instanceBrowserKey is not null
+            ? Stashed[_instanceBrowserKey].OpenDirectory
+            : LastOpenDirectory;
     }
 
     private static FilePickerFileType[] LoadFileBrowserFilter(string? filter = null)
@@ -147,11 +142,11 @@ public sealed class BrowserDialog
         if (filter != null) {
             try {
                 string[] groups = filter.Split('|');
-                FilePickerFileType[] types = new FilePickerFileType[groups.Length];
+                var types = new FilePickerFileType[groups.Length];
 
                 for (int i = 0; i < groups.Length; i++) {
                     string[] pair = groups[i].Split(':');
-                    types[i] = new(pair[0]) {
+                    types[i] = new FilePickerFileType(pair[0]) {
                         Patterns = pair[1].Split(';')
                     };
                 }
