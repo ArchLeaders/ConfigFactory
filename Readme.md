@@ -182,6 +182,16 @@ public class SomeObjectControlBuilder : ControlBuilder<SomeObjectControlBuilder>
 
 *(The last code snippet is specific to the Avalonia UI framework)*
 
+# Add Avalonia Style
+
+Add the style to app.axaml.
+
+```
+<Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://ConfigFactory.Avalonia/Themes/Fluent/ConfigFactory.Avalonia.axaml" />
+</Application.Styles>
+```
 # Avalonia Demo 
 
 Check out the [demo application](https://github.com/ArchLeaders/ConfigFactory/tree/master/src/ConfigFactory.Avalonia.Demo) for a complete implementation.
