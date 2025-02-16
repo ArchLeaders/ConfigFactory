@@ -78,9 +78,18 @@ public abstract class ConfigModule<T> : ObservableObject, IConfigModule where T 
             module = JsonSerializer.Deserialize<T>(fs)!;
         }
 
-        foreach (var (name, (property, _)) in module.Properties) {
-            typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)?
-                .Invoke(module, [property.GetValue(module)]);
+        foreach ((string name, (PropertyInfo property, _)) in module.Properties) {
+            if (typeof(T).GetMethod($"On{name}Changed", BindingFlags.NonPublic | BindingFlags.Instance)
+                    is { } onChanged) {
+                switch (onChanged.GetParameters().Length) {
+                    case 1:
+                        onChanged.Invoke(module, [property.GetValue(module)]);
+                        break;
+                    case 2:
+                        onChanged.Invoke(module, [null, property.GetValue(module)]);
+                        break;
+                }
+            }
         }
     }
 
