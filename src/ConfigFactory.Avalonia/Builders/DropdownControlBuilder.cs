@@ -29,7 +29,9 @@ internal static class DropdownBuilder
 
         if (!string.IsNullOrWhiteSpace(dropdownConfigAttribute.SelectedValuePath)) {
             comboBox.SelectedValueBinding = new Binding(dropdownConfigAttribute.SelectedValuePath);
-            comboBox[!SelectingItemsControl.SelectedValueProperty] = new Binding(propertyInfo.Name, BindingMode.TwoWay);
+            comboBox[!SelectingItemsControl.SelectedValueProperty] = new Binding(propertyInfo.Name) {
+                Mode = BindingMode.TwoWay
+            };
         }
         else {
             comboBox[!SelectingItemsControl.SelectedItemProperty] = new Binding(propertyInfo.Name);
